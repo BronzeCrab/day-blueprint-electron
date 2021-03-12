@@ -1,9 +1,8 @@
 import React from 'react';
-import Board from 'react-trello';
 import './App.global.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
 import Stats from './components/Stats/Stats';
+import Navbar from './components/Navbar';
 import Header from './components/Header';
 
 const data = require('./data.json');
@@ -13,7 +12,6 @@ const Index = () => {
     <div className="App">
       <Navbar />
       <Header />
-      <Board data={data} draggable editable />
     </div>
   );
 };
