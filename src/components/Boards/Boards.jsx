@@ -6,7 +6,11 @@ class Boards extends Component {
   render() {
     return (
       <div>
-      test
+        <Container>
+          <Draggable>
+            item
+          </Draggable>
+        </Container>
       </div>
     );
   }
