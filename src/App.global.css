@@ -18,7 +18,7 @@ body {
 }
 
 .nav {
-  margin-top: 6rem;
+  margin-top: 10rem;
 }
 
 .nav-link:hover {
@@ -33,6 +33,20 @@ body {
 
 .right-arrow {
   float: right;
+}
+
+.btn-col {
+  display: flex;
+  float: right;
+}
+
+.right-btn-group {
+  float: right;
+}
+
+.header-btn {
+  font-size: 14px;
+  height: 36px;
 }
 
 button {

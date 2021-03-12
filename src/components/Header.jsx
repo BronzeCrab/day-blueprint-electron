@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,12 +9,15 @@ class Navbar extends Component {
     return (
       <Container className="header-container">
         <Row>
-          <Col xs lg="2">
-            1 of 3
-          </Col>
-          <Col md="auto">Variable width content</Col>
-          <Col xs lg="2">
-            3 of 3
+          <Col>
+            <ButtonGroup>
+              <Button variant="secondary" className="header-btn">daily</Button>
+              <Button variant="secondary" className="header-btn">weekly</Button>
+            </ButtonGroup>
+            <ButtonGroup className="right-btn-group"> 
+              <Button variant="primary" className="header-btn">Copy</Button>
+              <Button variant="danger" className="header-btn">Delete</Button>
+            </ButtonGroup>
           </Col>
         </Row>
         <Row className="justify-content-md-center">
