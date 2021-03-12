@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 
-import '../App.global.css';
-
 // eslint-disable-next-line react/prefer-stateless-function
 class Navbar extends Component {
   render() {

@@ -13,18 +13,26 @@ body {
   align-items: center;
 }
 
-.nav {
-  margin-top: 2rem;
-}
-
 .react-trello-board {
   background-color: white !important;
+}
+
+.nav {
+  margin-top: 6rem;
 }
 
 .nav-link:hover {
   background-color: #e1effc;
   border-radius: 4px;
   transition: all 0.2s ease-out;
+}
+
+.header-container {
+  color: black;
+}
+
+.right-arrow {
+  float: right;
 }
 
 button {
