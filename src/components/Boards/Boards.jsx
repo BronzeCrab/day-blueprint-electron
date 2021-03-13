@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Draggable } from 'react-smooth-dnd';
-import { Container as BootstapContainer, Card, Button, Row, Col } from 'react-bootstrap';
+import { Container as BootstapContainer } from 'react-bootstrap';
 import { applyDrag, generateItems } from "./utils";
 
 const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
@@ -21,10 +21,6 @@ const cardColors = [
   "ivory",
   "khaki"
 ];
-const pickColor = () => {
-  const rand = Math.floor(Math.random() * 10);
-  return cardColors[rand];
-};
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
@@ -53,7 +49,6 @@ class Boards extends Component {
             id: `${i}${j}`,
             props: {
               className: "card",
-              style: { backgroundColor: pickColor() }
             },
             data: lorem.slice(0, Math.floor(Math.random() * 150) + 30)
           }))

@@ -6,6 +6,7 @@ export const applyDrag = (arr, dragResult) => {
   let itemToAdd = payload;
 
   if (removedIndex !== null) {
+    // eslint-disable-next react/destructuring-assignment
     itemToAdd = result.splice(removedIndex, 1)[0];
   }
 
