@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Stats from './components/Stats/Stats';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
+import Boards from './components/Boards/Boards';
 
 const data = require('./data.json');
 
@@ -12,6 +13,7 @@ const Index = () => {
     <div className="App">
       <Navbar />
       <Header />
+      <Boards />
     </div>
   );
 };

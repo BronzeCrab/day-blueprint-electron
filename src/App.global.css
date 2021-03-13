@@ -49,6 +49,13 @@ body {
   height: 36px;
 }
 
+.card-container {
+  color: black;
+  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 button {
   background-color: white;
   padding: 10px 20px;
@@ -78,4 +85,33 @@ a:hover {
   opacity: 1;
   text-decoration: none;
   cursor: pointer;
+}
+
+.card-scene{
+  padding: 50px;
+  /* background-color: #fff; */
+  margin-bottom: 13rem;
+}
+
+.card-container {
+  width: 260px;
+  padding: 10px;
+  margin: 5px;
+  margin-right: 45px;
+  background-color: #e1effc;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
+  overflow-y: scroll; 
+  height: 400px;
+}
+
+.card{
+  margin: 5px;
+  /* border: 1px solid #ccc; */
+  background-color: white;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
+  padding: 10px;
+}
+
+.card-column-header{
+  font-size: 18px;
 }
