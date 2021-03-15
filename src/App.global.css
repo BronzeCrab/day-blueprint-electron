@@ -27,6 +27,10 @@ body {
   transition: all 0.2s ease-out;
 }
 
+svg { 
+  cursor: pointer; 
+}
+
 .header-container {
   color: black;
 }
@@ -87,9 +91,8 @@ a:hover {
   cursor: pointer;
 }
 
-.card-scene{
+.board-container {
   padding: 50px;
-  /* background-color: #fff; */
   margin-bottom: 13rem;
 }
 
@@ -114,4 +117,9 @@ a:hover {
 
 .card-column-header{
   font-size: 18px;
+}
+
+.column-drag-handle {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
 }
