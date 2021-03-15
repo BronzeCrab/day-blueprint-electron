@@ -10,13 +10,13 @@ class Boards extends Component {
     return (
       <BootstapContainer className="board-container">
         <Container orientation="horizontal">
-          {data.boards[0].lanes.map(column => {
+          {data.boards[0].lanes.map(lane => {
             return (
-              <Draggable key={column.id}>
+              <Draggable key={lane.id}>
                 <div className="card-container">
                   <div className="card-column-header">
                     <span className="column-drag-handle">&#x2630;</span>
-                    {column.title}
+                    {lane.title}
                   </div>
                   <Container>
                     <Draggable className="card">
@@ -24,7 +24,7 @@ class Boards extends Component {
                         <p>test</p>
                       </div>
                     </Draggable>
-                    <Button variant="link" className="header-btn">Add new card</Button>
+                    <Button variant="link" className="header-btn">Add card</Button>
                   </Container>
                 </div>
               </Draggable>

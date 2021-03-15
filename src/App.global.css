@@ -13,10 +13,6 @@ body {
   align-items: center;
 }
 
-.react-trello-board {
-  background-color: white !important;
-}
-
 .nav {
   margin-top: 10rem;
 }
@@ -51,13 +47,6 @@ svg {
 .header-btn {
   font-size: 14px;
   height: 36px;
-}
-
-.card-container {
-  color: black;
-  overflow-y: scroll;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 button {
@@ -105,6 +94,7 @@ a:hover {
   box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
   overflow-y: scroll; 
   height: 400px;
+  color: black;
 }
 
 .card{
