@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
+import { getTodayDate } from "./utils";
+
+const date = getTodayDate();
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Navbar extends Component {
@@ -23,7 +26,7 @@ class Navbar extends Component {
         <Row className="justify-content-md-center">
           <Col><FontAwesomeIcon icon={faArrowLeft} /></Col>
           <Col md="auto">
-            31.01.2021 <FontAwesomeIcon icon={faCalendarDay}/>
+            {date} <FontAwesomeIcon icon={faCalendarDay}/>
           </Col>
           <Col>
             <FontAwesomeIcon icon={faArrowRight} className="right-arrow"/>

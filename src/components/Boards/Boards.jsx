@@ -22,6 +22,8 @@ const cardColors = [
   "khaki"
 ];
 
+const data = require('../../data.json');
+
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
   constructor() {
