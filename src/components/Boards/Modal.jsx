@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import { Modal as BootstrapModal, Button } from 'react-bootstrap';
+import { Modal as BootstrapModal, Button, InputGroup, FormControl, Form } from 'react-bootstrap';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Modal extends Component {
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    alert(event.target.title.value)
+  }
+
   render() {
     return (
       <BootstrapModal
@@ -15,20 +21,34 @@ class Modal extends Component {
       >
         <BootstrapModal.Header closeButton>
           <BootstrapModal.Title id="contained-modal-title-vcenter">
-            Modal heading
+            Add card
           </BootstrapModal.Title>
         </BootstrapModal.Header>
-        <BootstrapModal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </p>
-        </BootstrapModal.Body>
-        <BootstrapModal.Footer>
-          <Button onClick={this.props.onHide}>Close</Button>
-        </BootstrapModal.Footer>
+        <Form onSubmit={this.handleSubmit} > 
+          <BootstrapModal.Body>
+            <Form.Group controlId="title">
+              <InputGroup className="mb-3">
+                <Form.Control type="Title" placeholder="Enter Title" />
+              </InputGroup>
+            </Form.Group>
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+                <InputGroup.Text>Description</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl as="textarea" aria-label="description" />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="Tags"
+                aria-label="tags"
+              />
+            </InputGroup>
+          </BootstrapModal.Body>
+          <BootstrapModal.Footer>
+            <Button variant="success" type="submit">Add</Button>
+            <Button onClick={this.props.onHide}>Close</Button>
+          </BootstrapModal.Footer>
+        </Form>
       </BootstrapModal>
     );
   }
