@@ -14,7 +14,7 @@ body {
 }
 
 .nav {
-  margin-top: 10rem;
+  margin-top: 15rem;
 }
 
 .nav-link:hover {
@@ -112,4 +112,8 @@ a:hover {
 .column-drag-handle {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
+}
+
+.Modal {
+  color: black;
 }
