@@ -40,13 +40,17 @@ class Boards extends Component {
                       className="header-btn" 
                       onClick={() => this.setState({showModal: true})}>Add card</Button>
                     <Modal 
+                      key={lane.id}
                       show={this.state.showModal} 
-                      onHide={this.closeModal} 
+                      onHide={this.closeModal}
+                      laneid={lane.id}
                     />
+                    <Button>{lane.id}</Button>
                   </Container>
                 </div>
               </Draggable>
             );
+
           })}
         </Container>
       </BootstapContainer>

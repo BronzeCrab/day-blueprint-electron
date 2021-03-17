@@ -6,7 +6,8 @@ class Modal extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    alert(event.target.title.value)
+    // alert(event.target.title.value + ' ' + event.target.description.value + " " + event.target.tags.value)
+    alert(this.props.laneid)
   }
 
   render() {
@@ -19,7 +20,7 @@ class Modal extends Component {
         centered
         className="Modal"
       >
-        <BootstrapModal.Header closeButton>
+        <BootstrapModal.Header>
           <BootstrapModal.Title id="contained-modal-title-vcenter">
             Add card
           </BootstrapModal.Title>
@@ -31,20 +32,25 @@ class Modal extends Component {
                 <Form.Control type="Title" placeholder="Enter Title" />
               </InputGroup>
             </Form.Group>
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend>
-                <InputGroup.Text>Description</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl as="textarea" aria-label="description" />
-            </InputGroup>
-            <InputGroup className="mb-3">
-              <FormControl
-                placeholder="Tags"
-                aria-label="tags"
-              />
-            </InputGroup>
+            <Form.Group controlId="description">
+              <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                  <InputGroup.Text>Description</InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl as="textarea" aria-label="description" />
+              </InputGroup>
+            </Form.Group>
+            <Form.Group controlId="tags">
+              <InputGroup className="mb-3">
+                <FormControl
+                  placeholder="Tags"
+                  aria-label="tags"
+                />
+              </InputGroup>
+            </Form.Group>
           </BootstrapModal.Body>
           <BootstrapModal.Footer>
+            <Button variant="success">{this.props.laneid}</Button>
             <Button variant="success" type="submit">Add</Button>
             <Button onClick={this.props.onHide}>Close</Button>
           </BootstrapModal.Footer>
