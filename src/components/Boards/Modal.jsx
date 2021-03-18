@@ -7,7 +7,7 @@ class Modal extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     // alert(event.target.title.value + ' ' + event.target.description.value + " " + event.target.tags.value)
-    alert(this.props.laneid)
+    console.log(this.props.laneid)
   }
 
   render() {
@@ -50,7 +50,6 @@ class Modal extends Component {
             </Form.Group>
           </BootstrapModal.Body>
           <BootstrapModal.Footer>
-            <Button variant="success">{this.props.laneid}</Button>
             <Button variant="success" type="submit">Add</Button>
             <Button onClick={this.props.onHide}>Close</Button>
           </BootstrapModal.Footer>

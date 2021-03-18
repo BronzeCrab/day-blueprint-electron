@@ -10,11 +10,11 @@ class Boards extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {showModal: false, laneid: ''};
+    this.state = {showModal: false, laneid: '', data: data};
   }
 
   closeModal = () => {
-    this.setState({showModal: false, laneid: ''});
+    this.setState({showModal: false, laneid: '', data: data});
   }
 
   render() {
@@ -30,27 +30,30 @@ class Boards extends Component {
                     {lane.title}
                   </div>
                   <Container>
-                    <Draggable className="card">
-                      <div>
-                        <p>test</p>
-                      </div>
-                    </Draggable>
+                    {data.boards[0].lanes[lane.id - 1].cards.map(card => {
+                      return (
+                        <Draggable className="card" key={card.id}>
+                          <div className="title">
+                            <p>{card.title}</p>
+                          </div>
+                        </Draggable>
+                      );
+                    })}
                     <Button 
                       variant="link" 
                       className="header-btn" 
-                      onClick={() => this.setState({showModal: true, laneid: lane.id})}>Add card</Button>
+                      onClick={() => this.setState({showModal: true, laneid: lane.id, data: data})}>Add card</Button>
                     <Modal 
                       key={lane.id}
                       show={this.state.showModal} 
                       onHide={this.closeModal}
                       laneid={this.state.laneid}
+                      data={this.state.data}
                     />
-                    <Button>{lane.id}</Button>
                   </Container>
                 </div>
               </div>
             );
-
           })}
         </Container>
       </BootstapContainer>
