@@ -10,11 +10,11 @@ class Boards extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {showModal: false};
+    this.state = {showModal: false, laneid: ''};
   }
 
   closeModal = () => {
-    this.setState({showModal: false})
+    this.setState({showModal: false, laneid: ''});
   }
 
   render() {
@@ -38,12 +38,12 @@ class Boards extends Component {
                     <Button 
                       variant="link" 
                       className="header-btn" 
-                      onClick={() => this.setState({showModal: true})}>Add card</Button>
+                      onClick={() => this.setState({showModal: true, laneid: lane.id})}>Add card</Button>
                     <Modal 
                       key={lane.id}
                       show={this.state.showModal} 
                       onHide={this.closeModal}
-                      laneid={lane.id}
+                      laneid={this.state.laneid}
                     />
                     <Button>{lane.id}</Button>
                   </Container>
