@@ -85,11 +85,14 @@ a:hover {
   margin-bottom: 13rem;
 }
 
+.lane {
+  display: inline-block;
+}
+
 .card-container {
-  width: 252px;
-  padding: 10px;
-  margin: 5px;
-  margin-right: 45px;
+  width: 255px;
+  padding: 5px;
+  margin: 15px;
   background-color: #e1effc;
   box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
   overflow-y: scroll; 

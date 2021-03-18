@@ -23,7 +23,7 @@ class Boards extends Component {
         <Container orientation="horizontal">
           {data.boards[0].lanes.map(lane => {
             return (
-              <Draggable key={lane.id}>
+              <div className="lane" key={lane.id}>
                 <div className="card-container">
                   <div className="card-column-header">
                     <span className="column-drag-handle">&#x2630;</span>
@@ -48,7 +48,7 @@ class Boards extends Component {
                     <Button>{lane.id}</Button>
                   </Container>
                 </div>
-              </Draggable>
+              </div>
             );
 
           })}
