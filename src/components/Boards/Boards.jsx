@@ -17,14 +17,11 @@ class Boards extends Component {
   };
 
   addCard = ({ title, description, laneid }) => {
-    const { data } = this.state;
-    const _data = { ...data };
-    _data.boards[0].lanes[laneid - 1].cards.push({
+    data.boards[0].lanes[laneid - 1].cards.push({
       title,
-      description,
-      id: laneid + 1,
+      description
     });
-    this.setState({ data: _data });
+    this.setState({ data: data });
   };
 
   render() {
