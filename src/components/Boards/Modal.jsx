@@ -1,14 +1,30 @@
 import React, { Component } from 'react';
-import { Modal as BootstrapModal, Button, InputGroup, FormControl, Form } from 'react-bootstrap';
+import {
+  Modal as BootstrapModal,
+  Button,
+  InputGroup,
+  FormControl,
+  Form,
+} from 'react-bootstrap';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Modal extends Component {
+  state = {
+    title: '',
+    description: '',
+  };
 
   handleSubmit = (event) => {
+    const { title, description } = this.state;
+    const { addCard, laneid } = this.props;
     event.preventDefault();
-    // alert(event.target.title.value + ' ' + event.target.description.value + " " + event.target.tags.value)
-    alert(this.props.laneid)
-  }
+    if (title?.trim() && description?.trim()) {
+      addCard({ title, description, laneid });
+      this.props.onHide();
+    } else {
+      alert('Please enter all the details');
+    }
+  };
 
   render() {
     return (
@@ -25,11 +41,15 @@ class Modal extends Component {
             Add card
           </BootstrapModal.Title>
         </BootstrapModal.Header>
-        <Form onSubmit={this.handleSubmit} > 
+        <Form onSubmit={this.handleSubmit}>
           <BootstrapModal.Body>
             <Form.Group controlId="title">
               <InputGroup className="mb-3">
-                <Form.Control type="Title" placeholder="Enter Title" />
+                <Form.Control
+                  onChange={(e) => this.setState({ title: e.target.value })}
+                  type="Title"
+                  placeholder="Enter Title"
+                />
               </InputGroup>
             </Form.Group>
             <Form.Group controlId="description">
@@ -37,20 +57,25 @@ class Modal extends Component {
                 <InputGroup.Prepend>
                   <InputGroup.Text>Description</InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl as="textarea" aria-label="description" />
+                <FormControl
+                  onChange={(e) =>
+                    this.setState({ description: e.target.value })
+                  }
+                  as="textarea"
+                  aria-label="description"
+                />
               </InputGroup>
             </Form.Group>
             <Form.Group controlId="tags">
               <InputGroup className="mb-3">
-                <FormControl
-                  placeholder="Tags"
-                  aria-label="tags"
-                />
+                <FormControl placeholder="Tags" aria-label="tags" />
               </InputGroup>
             </Form.Group>
           </BootstrapModal.Body>
           <BootstrapModal.Footer>
-            <Button variant="success" type="submit">Add</Button>
+            <Button variant="success" type="submit">
+              Add
+            </Button>
             <Button onClick={this.props.onHide}>Close</Button>
           </BootstrapModal.Footer>
         </Form>
