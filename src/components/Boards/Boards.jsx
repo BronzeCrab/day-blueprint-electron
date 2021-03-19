@@ -36,6 +36,10 @@ class Boards extends Component {
                           <div className="title">
                             <p>{card.title}</p>
                           </div>
+                          <hr/>
+                          <div className="description">
+                            <p>{card.description}</p>
+                          </div>
                         </Draggable>
                       );
                     })}
@@ -48,7 +52,6 @@ class Boards extends Component {
                       show={this.state.showModal} 
                       onHide={this.closeModal}
                       laneid={this.state.laneid}
-                      data={this.state.data}
                     />
                   </Container>
                 </div>

@@ -7,7 +7,7 @@ class Modal extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     // alert(event.target.title.value + ' ' + event.target.description.value + " " + event.target.tags.value)
-    console.log(this.props.laneid)
+    alert(this.props.laneid)
   }
 
   render() {

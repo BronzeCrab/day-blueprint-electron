@@ -8,7 +8,7 @@
         "title": "to do",
         "cards": [
           {
-            "id":1,
+            "id": 1,
             "title": "test1",
             "description": "description1",
             "tags": ["tag1", "tag2"]
