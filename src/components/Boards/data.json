@@ -1,33 +1,86 @@
-{"boards": [
-  {
-    "id": 1,
-    "date": "",
-    "lanes": [
-      {
-        "id": 1,
-        "title": "to do",
-        "cards": [
+{
+        "type": "container",
+        "props": {
+          "orientation": "horizontal"
+        },
+        "children": [
           {
             "id": 1,
-            "title": "test1",
-            "description": "description1",
-            "tags": ["tag1", "tag2"],
-            "status": "to do"
+            "type": "container",
+            "name": "to do",
+            "props": {
+              "orientation": "vertical",
+              "className": "card-container"
+            },
+            "children": [
+              {
+                "type": "draggable",
+                "id": 1,
+                "props": {
+                  "className": "card",
+                  "style": {}
+                },
+                "title": "Test4",
+                "description": "Test4",
+                "tags": ["tag1", "tag2"]
+              },
+              {
+                "type": "draggable",
+                "id": 2,
+                "props": {
+                  "className": "card",
+                  "style": {}
+                },
+                "title": "Test1",
+                "description": "Test1",
+                "tags": ["tag1", "tag2"]
+              }
+            ] 
+          },
+          {
+            "id": 2,
+            "type": "container",
+            "name": "doing",
+            "props": {
+              "orientation": "vertical",
+              "className": "card-container"
+            },
+            "children": [
+              {
+                "type": "draggable",
+                "id": 11,
+                "props": {
+                  "className": "card",
+                  "style": {}
+                },
+                "title": "Test2",
+                "description": "Test2",
+                "tags": ["tag1", "tag2"]
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "type": "container",
+            "name": "done",
+            "props": {
+              "orientation": "vertical",
+              "className": "card-container"
+            },
+            "children": [
+              {
+                "type": "draggable",
+                "id": 111,
+                "props": {
+                  "className": "card",
+                  "style": {}
+                },
+                "title": "Test3",
+                "description": "Test3",
+                "tags": ["tag1", "tag2"]
+              }
+            ]
           }
-        ]
-      },
-      {
-        "id": 2,
-        "title": "doing",
-        "cards": []
-      },
-      {
-        "id": 3,
-        "title": "done",
-        "cards": []
-      }
-    ]
-  }
-],
-"tags": []
+        ],
+        "tags": []
 }
