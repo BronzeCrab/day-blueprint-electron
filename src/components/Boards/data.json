@@ -2,7 +2,6 @@
   "lanes": [
     {
       "id": 1,
-      "type": "container",
       "name": "to do",
       "cards": [
         {
@@ -13,10 +12,6 @@
         },
         {
           "id": 2,
-          "props": {
-            "className": "card",
-            "style": {}
-          },
           "title": "Test1",
           "description": "Test1",
           "tags": ["tag1", "tag2"]
@@ -25,7 +20,6 @@
     },
     {
       "id": 2,
-      "type": "container",
       "name": "doing",
       "cards": [
         {
@@ -38,7 +32,6 @@
     },
     {
       "id": 3,
-      "type": "container",
       "name": "done",
       "cards": [
         {

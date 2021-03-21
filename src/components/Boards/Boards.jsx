@@ -57,16 +57,7 @@ class Boards extends Component {
   render() {
     return (
       <BootstapContainer className="board-container">
-        <Container
-          orientation="horizontal"
-          onDrop={this.onColumnDrop}
-          dragHandleSelector=".column-drag-handle"
-          dropPlaceholder={{
-            animationDuration: 150,
-            showOnTop: true,
-            className: 'cards-drop-preview'
-          }}
-        >
+        <Container orientation="horizontal">
           {this.state.data.lanes.map((column, ind) => {
             return (
               <div key={column.id} className="lane">
