@@ -1,10 +1,10 @@
 {
-  "children": [
+  "lanes": [
     {
       "id": 1,
       "type": "container",
       "name": "to do",
-      "children": [
+      "cards": [
         {
           "id": 1,
           "title": "Test4",
@@ -27,7 +27,7 @@
       "id": 2,
       "type": "container",
       "name": "doing",
-      "children": [
+      "cards": [
         {
           "id": 11,
           "title": "Test2",
@@ -40,7 +40,7 @@
       "id": 3,
       "type": "container",
       "name": "done",
-      "children": [
+      "cards": [
         {
           "id": 111,
           "title": "Test3",

@@ -19,7 +19,7 @@ class Boards extends Component {
 
   addCard = ({ title, description, laneid }) => {
     let _data = JSON.parse(JSON.stringify(this.state.data));
-    _data.children[laneid].children.push({
+    _data.lanes[laneid].cards.push({
       title,
       description,
       id: btoa(Math.random()).substring(0,12),
@@ -33,28 +33,20 @@ class Boards extends Component {
   };
 
   getCardPayload = (columnId, index) => {
-    return this.state.data.children.filter(p => p.id === columnId)[0].children[
+    return this.state.data.lanes.filter(p => p.id === columnId)[0].cards[
       index
     ];
-  }
-
-  onColumnDrop = (dropResult) => {
-    const scene = Object.assign({}, this.state.data);
-    scene.children = applyDrag(this.state.data.children, dropResult);
-    this.setState({
-      data: scene
-    });
   }
 
   onCardDrop = (columnId, dropResult) => {
     if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
       const scene = Object.assign({}, this.state.data);
-      const column = scene.children.filter(p => p.id === columnId)[0];
-      const columnIndex = scene.children.indexOf(column);
+      const column = scene.lanes.filter(p => p.id === columnId)[0];
+      const columnIndex = scene.lanes.indexOf(column);
 
       const newColumn = Object.assign({}, column);
-      newColumn.children = applyDrag(newColumn.children, dropResult);
-      scene.children.splice(columnIndex, 1, newColumn);
+      newColumn.cards = applyDrag(newColumn.cards, dropResult);
+      scene.lanes.splice(columnIndex, 1, newColumn);
 
       this.setState({
         data: scene
@@ -75,7 +67,7 @@ class Boards extends Component {
             className: 'cards-drop-preview'
           }}
         >
-          {this.state.data.children.map((column, ind) => {
+          {this.state.data.lanes.map((column, ind) => {
             return (
               <div key={column.id} className="lane">
                 <div className="card-container">
@@ -99,7 +91,7 @@ class Boards extends Component {
                     }}
                     dropPlaceholderAnimationDuration={200}
                   >
-                    {column.children.map(card => {
+                    {column.cards.map(card => {
                       return (
                         <Draggable className="card" key={card.id}>
                           <div className="title">
