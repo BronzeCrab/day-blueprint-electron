@@ -16,10 +16,10 @@ class Modal extends Component {
 
   handleSubmit = (event) => {
     const { title, description } = this.state;
-    const { addCard, laneid } = this.props;
+    const { _addcard, laneid } = this.props;
     event.preventDefault();
     if (title?.trim() && description?.trim()) {
-      addCard({ title, description, laneid });
+      _addcard({ title, description, laneid });
       this.props.onHide();
     } else {
       alert('Please enter all the details');
