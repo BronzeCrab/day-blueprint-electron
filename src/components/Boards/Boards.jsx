@@ -23,7 +23,6 @@ class Boards extends Component {
       title,
       description,
       id: btoa(Math.random()).substring(0,12),
-      "type": "draggable",
       "props": {
         "className": "card",
         "style": {}
@@ -78,8 +77,8 @@ class Boards extends Component {
         >
           {this.state.data.children.map((column, ind) => {
             return (
-              <Draggable key={column.id}>
-                <div className={column.props.className}>
+              <div key={column.id} className="lane">
+                <div className="card-container">
                   <div className="card-column-header">
                     <span className="column-drag-handle">&#x2630;</span>
                     {column.name}
@@ -127,7 +126,7 @@ class Boards extends Component {
                     </Button>
                   </Container>
                 </div>
-              </Draggable>
+              </div>
             );
           })}
           <Modal
