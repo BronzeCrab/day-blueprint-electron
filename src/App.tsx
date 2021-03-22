@@ -6,12 +6,14 @@ import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Boards from './components/Boards/Boards';
 
-const Index = () => {
+
+const Index = (props) => {
+
   return (
     <div className="App">
       <Navbar />
       <Header />
-      <Boards/>
+      <Boards />
     </div>
   );
 };

@@ -8,6 +8,13 @@ const date = getTodayDate();
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Navbar extends Component {
+
+  deleteCards = () => {
+    this.props.data.lanes.forEach(lane => {
+      lane.cards = [];
+    })
+  }
+
   render() {
     return (
       <Container className="header-container">
@@ -19,7 +26,7 @@ class Navbar extends Component {
             </ButtonGroup>
             <ButtonGroup className="right-btn-group"> 
               <Button variant="primary" className="header-btn">Copy</Button>
-              <Button variant="danger" className="header-btn">Delete</Button>
+              <Button variant="danger" className="header-btn" onClick={this.deleteCards}>Delete</Button>
             </ButtonGroup>
           </Col>
         </Row>
