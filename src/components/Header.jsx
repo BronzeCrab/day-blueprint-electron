@@ -11,7 +11,7 @@ import { getTodayDate } from './utils';
 const date = getTodayDate();
 
 // eslint-disable-next-line react/prefer-stateless-function
-class Navbar extends Component {
+class Header extends Component {
   render() {
     const { deleteCards } = this.props;
     return (
@@ -56,4 +56,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default Header;
