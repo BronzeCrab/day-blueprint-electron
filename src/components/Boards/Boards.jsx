@@ -10,7 +10,7 @@ const data = require('./data.json');
 class Boards extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false, laneid: '', data: JSON.parse(JSON.stringify(data)) };
+    this.state = { showModal: false, laneid: '', data: data };
   }
 
   closeModal = () => {
@@ -18,15 +18,11 @@ class Boards extends Component {
   };
 
   addCard = ({ title, description, laneid }) => {
-    let _data = JSON.parse(JSON.stringify(this.state.data));
+    let _data = this.state.data;
     _data.lanes[laneid].cards.push({
       title,
       description,
       id: btoa(Math.random()).substring(0,12),
-      "props": {
-        "className": "card",
-        "style": {}
-      },
       "tags": ["tag1", "tag2"],
     });
     this.setState({ data: _data });
