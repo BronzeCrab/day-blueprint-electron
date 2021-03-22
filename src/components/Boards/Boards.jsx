@@ -53,17 +53,23 @@ class Boards extends Component {
 
   deleteCards = () => {
     const { data } = this.state;
-    const copiedData = JSON.parse(JSON.stringify(data));
+    const copiedData = data;
     copiedData.lanes.forEach((lane) => {
       lane.cards = [];
     });
     this.setState({ data: copiedData });
   };
 
+  copyCards = () => {
+    const { data } = this.state;
+    const copiedData = data;
+    this.setState({ data: copiedData });
+  };
+
   render() {
     return (
       <>
-        <Header deleteCards={this.deleteCards} />
+        <Header deleteCards={this.deleteCards} copyCards={this.copyCards} />
         <BootstapContainer className="board-container">
           <Container orientation="horizontal">
             {this.state.data.lanes.map((column, ind) => {

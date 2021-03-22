@@ -13,7 +13,7 @@ const date = getTodayDate();
 // eslint-disable-next-line react/prefer-stateless-function
 class Header extends Component {
   render() {
-    const { deleteCards } = this.props;
+    const { deleteCards, copyCards } = this.props;
     return (
       <Container className="header-container">
         <Row>
@@ -27,7 +27,11 @@ class Header extends Component {
               </Button>
             </ButtonGroup>
             <ButtonGroup className="right-btn-group">
-              <Button variant="primary" className="header-btn">
+              <Button 
+                variant="primary" 
+                className="header-btn"
+                onClick={copyCards}
+              >
                 Copy
               </Button>
               <Button
