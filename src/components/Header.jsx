@@ -6,14 +6,12 @@ import {
   faArrowRight,
   faCalendarDay,
 } from '@fortawesome/free-solid-svg-icons';
-import { getTodayDate } from './utils';
-
-const date = getTodayDate();
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Header extends Component {
+
   render() {
-    const { deleteCards, copyCards } = this.props;
+    const { deleteCards, copyCards, goLeft, goRight } = this.props;
     return (
       <Container className="header-container">
         <Row>
@@ -46,13 +44,13 @@ class Header extends Component {
         </Row>
         <Row className="justify-content-md-center">
           <Col>
-            <FontAwesomeIcon icon={faArrowLeft} />
+            <FontAwesomeIcon icon={faArrowLeft} onClick={goLeft} />
           </Col>
           <Col md="auto">
-            {date} <FontAwesomeIcon icon={faCalendarDay} />
+            {this.props.date} <FontAwesomeIcon icon={faCalendarDay} />
           </Col>
           <Col>
-            <FontAwesomeIcon icon={faArrowRight} className="right-arrow" />
+            <FontAwesomeIcon icon={faArrowRight} onClick={goRight} className="right-arrow" />
           </Col>
         </Row>
       </Container>

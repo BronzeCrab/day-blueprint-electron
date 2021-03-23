@@ -4,14 +4,17 @@ import { Container as BootstapContainer, Button } from 'react-bootstrap';
 import Modal from './Modal';
 import Header from '../Header';
 import { applyDrag } from './utils';
+import { getTodayDate } from '../utils';
 
 const data = require('./data.json');
+
+const date = getTodayDate();
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false, laneid: '', data: data };
+    this.state = { showModal: false, laneid: '', data: data, date: date };
   }
 
   closeModal = () => {
@@ -60,16 +63,33 @@ class Boards extends Component {
     this.setState({ data: copiedData });
   };
 
-  copyCards = () => {
-    const { data } = this.state;
-    const copiedData = data;
-    this.setState({ data: copiedData });
-  };
+  goLeft = () => {
+    const { date } = this.state;
+    const yesterday = new Date(date);
+    yesterday.setDate(yesterday.getDate() - 1);
+    this.setState({
+      date: yesterday.getFullYear() + "-" + (yesterday.getMonth()+1) + "-" + yesterday.getDate(),
+    });
+  }
+
+  goRight = () => {
+    const { date } = this.state;
+    const tomorrow = new Date(date);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    this.setState({
+      date: tomorrow.getFullYear() + "-" + (tomorrow.getMonth()+1) + "-" + tomorrow.getDate(),
+    });
+  }
 
   render() {
     return (
       <>
-        <Header deleteCards={this.deleteCards} copyCards={this.copyCards} />
+        <Header 
+          deleteCards={this.deleteCards} 
+          goLeft={this.goLeft} 
+          goRight={this.goRight} 
+          date={this.state.date} 
+        />
         <BootstapContainer className="board-container">
           <Container orientation="horizontal">
             {this.state.data.lanes.map((column, ind) => {

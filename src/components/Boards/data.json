@@ -3,6 +3,7 @@
     {
       "id": 1,
       "name": "to do",
+      "board_id": 1,
       "cards": [
         {
           "id": 1,
@@ -21,6 +22,7 @@
     {
       "id": 2,
       "name": "doing",
+      "board_id": 1,
       "cards": [
         {
           "id": 3,
@@ -33,6 +35,7 @@
     {
       "id": 3,
       "name": "done",
+      "board_id": 1,
       "cards": [
         {
           "id": 4,
