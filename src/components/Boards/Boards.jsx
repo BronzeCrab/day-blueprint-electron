@@ -3,8 +3,7 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import { Container as BootstapContainer, Button } from 'react-bootstrap';
 import Modal from './Modal';
 import Header from '../Header';
-import { applyDrag } from './utils';
-import { getTodayDate } from '../utils';
+import { applyDrag, getTodayDate, convertDateToStr } from './utils';
 
 const data = require('./data.json');
 
@@ -68,7 +67,7 @@ class Boards extends Component {
     const yesterday = new Date(date);
     yesterday.setDate(yesterday.getDate() - 1);
     this.setState({
-      date: yesterday.getFullYear() + "-" + (yesterday.getMonth()+1) + "-" + yesterday.getDate(),
+      date: convertDateToStr(yesterday),
     });
   }
 
@@ -77,7 +76,7 @@ class Boards extends Component {
     const tomorrow = new Date(date);
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.setState({
-      date: tomorrow.getFullYear() + "-" + (tomorrow.getMonth()+1) + "-" + tomorrow.getDate(),
+      date: convertDateToStr(tomorrow),
     });
   }
 

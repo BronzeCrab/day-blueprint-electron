@@ -24,3 +24,11 @@ export const generateItems = (count, creator) => {
   }
   return result;
 };
+
+export const getTodayDate = () => {
+  return new Date().toISOString().slice(0, 10);
+};
+
+export const convertDateToStr = (date) => {
+  return date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+};
