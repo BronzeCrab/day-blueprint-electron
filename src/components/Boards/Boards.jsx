@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Draggable } from 'react-smooth-dnd';
 import { Container as BootstapContainer, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Modal from './Modal';
 import Header from '../Header';
 import { applyDrag, getTodayDate, convertDateToStr } from './utils';
@@ -125,6 +127,7 @@ class Boards extends Component {
                             <div className="description">
                               <p>{card.description}</p>
                             </div>
+                            <FontAwesomeIcon icon={faEdit} />
                           </Draggable>
                         );
                       })}
