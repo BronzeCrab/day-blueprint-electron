@@ -17,14 +17,6 @@ export const applyDrag = (arr, dragResult) => {
   return result;
 };
 
-export const generateItems = (count, creator) => {
-  const result = [];
-  for (let i = 0; i < count; i+=1) {
-    result.push(creator(i));
-  }
-  return result;
-};
-
 export const getTodayDate = () => {
   return new Date().toISOString().slice(0, 10);
 };
