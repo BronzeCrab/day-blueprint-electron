@@ -32,3 +32,5 @@ export const getTodayDate = () => {
 export const convertDateToStr = (date) => {
   return date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
 };
+
+export const addZero = (str) => str.replace(/(^|\D)(\d)(?!\d)/g, '$10$2')

@@ -3,19 +3,20 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import { Container as BootstapContainer, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+
 import Modal from './Modal';
 import Header from '../Header';
-import { applyDrag, getTodayDate, convertDateToStr } from './utils';
+import { applyDrag, getTodayDate, convertDateToStr, addZero } from './utils';
 
-const data = require('./data.json');
+const _data = require('./data.json');
 
-const date = getTodayDate();
+const _date = new Date();
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false, laneid: '', data: data, date: date };
+    this.state = { showModal: false, laneid: '', data: _data, date: addZero(`${_date.getFullYear()}-${_date.getMonth() + 1}-${_date.getDate()}`) };
   }
 
   closeModal = () => {
@@ -23,7 +24,7 @@ class Boards extends Component {
   };
 
   addCard = ({ title, description, laneid }) => {
-    let _data = this.state.data;
+    const _data = this.state.data;
     _data.lanes[laneid].cards.push({
       title,
       description,
@@ -40,12 +41,13 @@ class Boards extends Component {
   };
 
   onCardDrop = (columnId, dropResult) => {
+    const { data } = this.state;
     if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-      const scene = Object.assign({}, this.state.data);
+      const scene = { ...data };
       const column = scene.lanes.filter((p) => p.id === columnId)[0];
       const columnIndex = scene.lanes.indexOf(column);
 
-      const newColumn = Object.assign({}, column);
+      const newColumn = { ...column };
       newColumn.cards = applyDrag(newColumn.cards, dropResult);
       scene.lanes.splice(columnIndex, 1, newColumn);
 
@@ -69,7 +71,7 @@ class Boards extends Component {
     const yesterday = new Date(date);
     yesterday.setDate(yesterday.getDate() - 1);
     this.setState({
-      date: convertDateToStr(yesterday),
+      date: addZero(`${yesterday.getFullYear()}-${yesterday.getMonth() + 1}-${yesterday.getDate()}`),
     });
   }
 
@@ -78,22 +80,30 @@ class Boards extends Component {
     const tomorrow = new Date(date);
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.setState({
-      date: convertDateToStr(tomorrow),
+      date: addZero(`${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`),
+    });
+  }
+
+  handleChangeDate = (e) => {
+    this.setState({
+      date: e.target.value,
     });
   }
 
   render() {
+    const { date, data, laneid, showModal } = this.state;
     return (
       <>
-        <Header 
-          deleteCards={this.deleteCards} 
-          goLeft={this.goLeft} 
-          goRight={this.goRight} 
-          date={this.state.date} 
+        <Header
+          deleteCards={this.deleteCards}
+          goLeft={this.goLeft}
+          goRight={this.goRight}
+          date={date}
+          handleChangeDate={this.handleChangeDate}
         />
         <BootstapContainer className="board-container">
           <Container orientation="horizontal">
-            {this.state.data.lanes.map((column, ind) => {
+            {data.lanes.map((column, ind) => {
               return (
                 <div key={column.id} className="lane">
                   <div className="card-container">
@@ -149,10 +159,10 @@ class Boards extends Component {
               );
             })}
             <Modal
-              show={this.state.showModal}
+              show={showModal}
               onHide={this.closeModal}
               _addcard={this.addCard}
-              laneid={this.state.laneid}
+              laneid={laneid}
             />
           </Container>
         </BootstapContainer>

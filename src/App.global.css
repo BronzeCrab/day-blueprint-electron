@@ -120,3 +120,8 @@ a:hover {
 .Modal {
   color: black;
 }
+
+.datepicker {
+  border: none;
+  outline: none;
+}
