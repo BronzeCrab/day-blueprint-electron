@@ -4,14 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft,
   faArrowRight,
-  faCalendarDay,
 } from '@fortawesome/free-solid-svg-icons';
+
+import { DatePicker } from './DatePicker/datePIcker';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Header extends Component {
 
   render() {
-    const { deleteCards, copyCards, goLeft, goRight } = this.props;
+    const { deleteCards, copyCards, goLeft, goRight, date, handleChangeDate } = this.props;
     return (
       <Container className="header-container">
         <Row>
@@ -25,8 +26,8 @@ class Header extends Component {
               </Button>
             </ButtonGroup>
             <ButtonGroup className="right-btn-group">
-              <Button 
-                variant="primary" 
+              <Button
+                variant="primary"
                 className="header-btn"
                 onClick={copyCards}
               >
@@ -47,7 +48,7 @@ class Header extends Component {
             <FontAwesomeIcon icon={faArrowLeft} onClick={goLeft} />
           </Col>
           <Col md="auto">
-            {this.props.date} <FontAwesomeIcon icon={faCalendarDay} />
+            <DatePicker handleChange={handleChangeDate} dateVal={date} />
           </Col>
           <Col>
             <FontAwesomeIcon icon={faArrowRight} onClick={goRight} className="right-arrow" />
