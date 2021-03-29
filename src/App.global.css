@@ -23,8 +23,8 @@ body {
   transition: all 0.2s ease-out;
 }
 
-svg { 
-  cursor: pointer; 
+svg {
+  cursor: pointer;
 }
 
 .header-container {
@@ -94,21 +94,21 @@ a:hover {
   padding: 5px;
   margin: 15px;
   background-color: #e1effc;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
-  overflow-y: scroll; 
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
+  overflow-y: scroll;
   height: 400px;
   color: black;
 }
 
-.card{
+.card {
   margin: 5px;
   /* border: 1px solid #ccc; */
   background-color: white;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
   padding: 10px;
 }
 
-.card-column-header{
+.card-column-header {
   font-size: 18px;
 }
 
@@ -121,13 +121,49 @@ a:hover {
   color: black;
 }
 
-.datepicker {
+.exmp-wrp {
+  position: relative;
+  width: 120px;
+}
+
+.btn-wrp {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.btn-clck {
   border: none;
+  background: transparent;
+  width: 100%;
+  padding: 10px;
   outline: none;
 }
 
-.datepicker::-webkit-inner-spin-button,
-.datepicker::-webkit-calendar-picker-indicator {
-  opacity:0;   
+.btn-clck::-webkit-calendar-picker-indicator {
+  right: -10px;
+  position: absolute;
+  width: 78px;
+  height: 40px;
+  color: rgba(204, 204, 204, 0);
+  opacity: 0;
+}
+
+.btn-clck::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+
+.btn-clck::-webkit-clear-button {
+  margin-right: 75px;
+}
+
+.calendarBtn {
+  height: 100%;
+  box-sizing: unset;
+  border: none;
+  position: absolute;
+  right: 0;
+  top: 0;
 }

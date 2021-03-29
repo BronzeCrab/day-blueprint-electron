@@ -6,17 +6,17 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from './Modal';
 import Header from '../Header';
-import { applyDrag, getTodayDate, convertDateToStr } from './utils';
+import { applyDrag, getTodayDate, convertDateToStr, handleDateExp } from './utils';
 
-const data = require('./data.json');
+const _data = require('./data.json');
 
-const date = getTodayDate();
+const _date = new Date();
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false, laneid: '', data: data, date: date };
+    this.state = { showModal: false, laneid: '', data: _data, date: handleDateExp(_date) };
   }
 
   closeModal = () => {
@@ -71,7 +71,7 @@ class Boards extends Component {
     const yesterday = new Date(date);
     yesterday.setDate(yesterday.getDate() - 1);
     this.setState({
-      date: convertDateToStr(yesterday),
+      date: handleDateExp(yesterday),
     });
   }
 
@@ -80,7 +80,13 @@ class Boards extends Component {
     const tomorrow = new Date(date);
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.setState({
-      date: convertDateToStr(tomorrow),
+      date: handleDateExp(tomorrow),
+    });
+  }
+
+  handleChangeDate = (e) => {
+    this.setState({
+      date: e.target.value,
     });
   }
 

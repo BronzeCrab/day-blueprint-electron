@@ -48,7 +48,7 @@ class Header extends Component {
             <FontAwesomeIcon icon={faArrowLeft} onClick={goLeft} />
           </Col>
           <Col md="auto">
-            {date} <DatePicker handleChange={handleChangeDate} dateVal={date} />
+            <DatePicker handleChange={handleChangeDate} dateVal={date} />
           </Col>
           <Col>
             <FontAwesomeIcon icon={faArrowRight} onClick={goRight} className="right-arrow" />

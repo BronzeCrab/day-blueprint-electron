@@ -22,5 +22,22 @@ export const getTodayDate = () => {
 };
 
 export const convertDateToStr = (date) => {
-  return date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+  return (
+    date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+  );
 };
+
+export const handleDateExp = (date) => {
+  // var ndateArr = str.toString().split(' ');
+  // var Months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec';
+  const str = new Date(date);
+  
+  let day = str.getDate();
+  if(day <= 9)
+    day = `0${day}`;
+  let month = str.getMonth() + 1
+  if(month <= 9)
+    month = `0${ month}`;
+  const year = str.getFullYear();
+  return `${year}-${month}-${day}`;
+}
