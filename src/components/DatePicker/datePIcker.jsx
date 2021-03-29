@@ -1,9 +1,12 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 
 export const DatePicker = ({ handleChange, dateVal }) => {
-    return (
-        <div>
-            <input type="date" onChange={handleChange} value={dateVal} className="datepicker" />
-        </div>
-    )
+
+  return (
+    <>
+      <FontAwesomeIcon icon={faCalendarDay} />
+    </>
+  )
 }

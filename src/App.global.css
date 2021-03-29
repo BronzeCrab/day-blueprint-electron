@@ -125,3 +125,9 @@ a:hover {
   border: none;
   outline: none;
 }
+
+.datepicker::-webkit-inner-spin-button,
+.datepicker::-webkit-calendar-picker-indicator {
+  opacity:0;   
+  -webkit-appearance: none;
+}

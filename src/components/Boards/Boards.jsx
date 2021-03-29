@@ -6,17 +6,17 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from './Modal';
 import Header from '../Header';
-import { applyDrag, getTodayDate, convertDateToStr, addZero } from './utils';
+import { applyDrag, getTodayDate, convertDateToStr } from './utils';
 
-const _data = require('./data.json');
+const data = require('./data.json');
 
-const _date = new Date();
+const date = getTodayDate();
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false, laneid: '', data: _data, date: addZero(`${_date.getFullYear()}-${_date.getMonth() + 1}-${_date.getDate()}`) };
+    this.state = { showModal: false, laneid: '', data: data, date: date };
   }
 
   closeModal = () => {
@@ -71,7 +71,7 @@ class Boards extends Component {
     const yesterday = new Date(date);
     yesterday.setDate(yesterday.getDate() - 1);
     this.setState({
-      date: addZero(`${yesterday.getFullYear()}-${yesterday.getMonth() + 1}-${yesterday.getDate()}`),
+      date: convertDateToStr(yesterday),
     });
   }
 
@@ -80,7 +80,7 @@ class Boards extends Component {
     const tomorrow = new Date(date);
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.setState({
-      date: addZero(`${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`),
+      date: convertDateToStr(tomorrow),
     });
   }
 

@@ -17,14 +17,6 @@ export const applyDrag = (arr, dragResult) => {
   return result;
 };
 
-export const generateItems = (count, creator) => {
-  const result = [];
-  for (let i = 0; i < count; i+=1) {
-    result.push(creator(i));
-  }
-  return result;
-};
-
 export const getTodayDate = () => {
   return new Date().toISOString().slice(0, 10);
 };
@@ -32,5 +24,3 @@ export const getTodayDate = () => {
 export const convertDateToStr = (date) => {
   return date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
 };
-
-export const addZero = (str) => str.replace(/(^|\D)(\d)(?!\d)/g, '$10$2')

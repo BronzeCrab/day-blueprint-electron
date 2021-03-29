@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft,
   faArrowRight,
-  faCalendarDay,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { DatePicker } from './DatePicker/datePIcker';
@@ -49,7 +48,7 @@ class Header extends Component {
             <FontAwesomeIcon icon={faArrowLeft} onClick={goLeft} />
           </Col>
           <Col md="auto">
-            <DatePicker handleChange={handleChangeDate} dateVal={date} />
+            {date} <DatePicker handleChange={handleChangeDate} dateVal={date} />
           </Col>
           <Col>
             <FontAwesomeIcon icon={faArrowRight} onClick={goRight} className="right-arrow" />
