@@ -6,17 +6,17 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from './Modal';
 import Header from '../Header';
-import { applyDrag, getTodayDate, convertDateToStr, handleDateExp } from './utils';
+import { applyDrag, getTodayDate, handleDateExp } from './utils';
 
 const _data = require('./data.json');
 
-const _date = new Date();
+const _date = getTodayDate();
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false, laneid: '', data: _data, date: handleDateExp(_date) };
+    this.state = { showModal: false, laneid: '', data: _data, date: _date };
   }
 
   closeModal = () => {
