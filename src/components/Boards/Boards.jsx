@@ -8,15 +8,15 @@ import Modal from './Modal';
 import Header from '../Header';
 import { applyDrag, getTodayDate, handleDateExp } from './utils';
 
-const _data = require('./data.json');
+const data = require('./data.json');
 
-const _date = getTodayDate();
+const date = getTodayDate();
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false, laneid: '', data: _data, date: _date };
+    this.state = { showModal: false, laneid: '', data, date };
   }
 
   closeModal = () => {
@@ -24,14 +24,14 @@ class Boards extends Component {
   };
 
   addCard = ({ title, description, laneid }) => {
-    const _data = this.state.data;
-    _data.lanes[laneid].cards.push({
+    const { data } = this.state;
+    data.lanes[laneid].cards.push({
       title,
       description,
       id: btoa(Math.random()).substring(0, 12),
       tags: ['tag1', 'tag2'],
     });
-    this.setState({ data: _data });
+    this.setState({ data });
   };
 
   getCardPayload = (columnId, index) => {
@@ -151,7 +151,7 @@ class Boards extends Component {
                           })
                         }
                       >
-                        Add card
+                        + Add card
                       </Button>
                     </Container>
                   </div>
