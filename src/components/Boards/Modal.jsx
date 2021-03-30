@@ -1,3 +1,6 @@
+/* eslint-disable no-alert */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-deprecated */
 import React, { Component } from 'react';
 import {
   Modal as BootstrapModal,
@@ -9,28 +12,49 @@ import {
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Modal extends Component {
-  state = {
-    title: '',
-    description: '',
-  };
+  constructor() {
+    super();
+    this.state = {
+      title: '',
+      description: '',
+      tags: '',
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { title, description } = this.state;
+    if (nextProps.editTitle !== title || nextProps.editDescription !== description) {
+      this.setState({
+        title: nextProps.editTitle,
+        description: nextProps.editDescription,
+        tags: nextProps.editTags ? nextProps.editTags.join(' ') : '',
+      });
+    }
+  }
 
   handleSubmit = (event) => {
-    const { title, description } = this.state;
-    const { _addcard, laneid } = this.props;
     event.preventDefault();
+    const { title, description, tags } = this.state;
+    const { addcard, laneid, isEdit, updateCardDetails, cardID } = this.props;
     if (title?.trim() && description?.trim()) {
-      _addcard({ title, description, laneid });
-      this.props.onHide();
+      if (isEdit) {
+        updateCardDetails({ title, description, laneid, cardID, tags });
+      } else {
+        addcard({ title, description, laneid, tags });
+      }
     } else {
       alert('Please enter all the details');
     }
   };
 
   render() {
+    const { isEdit, show, onHide } = this.props;
+    const { title, description, tags } = this.state;
+
     return (
       <BootstrapModal
-        // eslint-disable-next-line
-        {...this.props}
+        show={show}
+        onHide={onHide}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -38,7 +62,7 @@ class Modal extends Component {
       >
         <BootstrapModal.Header>
           <BootstrapModal.Title id="contained-modal-title-vcenter">
-            Add card
+            {isEdit ? "Edit card" : "Add card"}
           </BootstrapModal.Title>
         </BootstrapModal.Header>
         <Form onSubmit={this.handleSubmit}>
@@ -46,7 +70,8 @@ class Modal extends Component {
             <Form.Group controlId="title">
               <InputGroup className="mb-3">
                 <Form.Control
-                  onChange={(e) => this.setState({ title: e.target.value })}
+                  value={title}
+                  onChange={({ target: { value } }) => this.setState({ title: value })}
                   type="Title"
                   placeholder="Enter Title"
                 />
@@ -58,8 +83,9 @@ class Modal extends Component {
                   <InputGroup.Text>Description</InputGroup.Text>
                 </InputGroup.Prepend>
                 <FormControl
-                  onChange={(e) =>
-                    this.setState({ description: e.target.value })
+                  value={description}
+                  onChange={({ target: { value } }) =>
+                    this.setState({ description: value })
                   }
                   as="textarea"
                   aria-label="description"
@@ -68,15 +94,22 @@ class Modal extends Component {
             </Form.Group>
             <Form.Group controlId="tags">
               <InputGroup className="mb-3">
-                <FormControl placeholder="Tags" aria-label="tags" />
+                <FormControl
+                  onChange={({ target: { value } }) =>
+                    this.setState({ tags: value })
+                  }
+                  value={tags}
+                  placeholder="Tags"
+                  aria-label="tags"
+                />
               </InputGroup>
             </Form.Group>
           </BootstrapModal.Body>
           <BootstrapModal.Footer>
             <Button variant="success" type="submit">
-              Add
+              {isEdit ? "Edit" : "Add"}
             </Button>
-            <Button onClick={this.props.onHide}>Close</Button>
+            <Button onClick={onHide}>Close</Button>
           </BootstrapModal.Footer>
         </Form>
       </BootstrapModal>

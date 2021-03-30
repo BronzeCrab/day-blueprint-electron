@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
 import { Container, Draggable } from 'react-smooth-dnd';
 import { Container as BootstapContainer, Button } from 'react-bootstrap';
@@ -8,34 +9,54 @@ import Modal from './Modal';
 import Header from '../Header';
 import { applyDrag, getTodayDate, handleDateExp } from './utils';
 
-const _data = require('./data.json');
+const mockedData = require('./data.json');
 
-const _date = getTodayDate();
+const currentDate = getTodayDate();
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false, laneid: '', data: _data, date: _date };
+    this.state = {
+      showModal: false,
+      laneid: '',
+      data: mockedData,
+      date: currentDate,
+      isEdit: false,
+      editTitle: '',
+      editDescription: '',
+      cardID: '',
+    };
   }
 
   closeModal = () => {
-    this.setState({ showModal: false, laneid: '' });
+    this.setState({
+      showModal: false,
+      laneid: '',
+      isEdit: false,
+      editTitle: '',
+      editDescription: '',
+      editTags: '',
+      cardID: '',
+    });
   };
 
-  addCard = ({ title, description, laneid }) => {
-    const _data = this.state.data;
-    _data.lanes[laneid].cards.push({
+  addCard = ({ title, description, laneid, tags }) => {
+    const { data } = this.state;
+    const copiedData = JSON.parse(JSON.stringify(data));
+    copiedData.lanes[laneid].cards.push({
       title,
       description,
       id: btoa(Math.random()).substring(0, 12),
-      tags: ['tag1', 'tag2'],
+      tags: tags.split(' '),
     });
-    this.setState({ data: _data });
+    this.setState({ data: copiedData });
+    this.closeModal();
   };
 
   getCardPayload = (columnId, index) => {
-    return this.state.data.lanes.filter((p) => p.id === columnId)[0].cards[
+    const { data } = this.state;
+    return data.lanes.filter((p) => p.id === columnId)[0].cards[
       index
     ];
   };
@@ -90,8 +111,30 @@ class Boards extends Component {
     });
   }
 
+  updateCardDetails = ({ title, description, laneid, cardID, tags }) => {
+    const { data } = this.state;
+    const copiedData = JSON.parse(JSON.stringify(data));
+    copiedData.lanes[laneid].cards[cardID].title = title;
+    copiedData.lanes[laneid].cards[cardID].description = description;
+    copiedData.lanes[laneid].cards[cardID].tags = tags.split(' ');
+    this.setState({
+      data: copiedData
+    });
+    this.closeModal();
+  }
+
   render() {
-    const { date, data, laneid, showModal } = this.state;
+    const {
+      date,
+      data,
+      laneid,
+      showModal,
+      isEdit,
+      editTitle,
+      editDescription,
+      cardID,
+      editTags
+    } = this.state;
     return (
       <>
         <Header
@@ -127,7 +170,7 @@ class Boards extends Component {
                       }}
                       dropPlaceholderAnimationDuration={200}
                     >
-                      {column.cards.map((card) => {
+                      {column.cards.map((card, cardInd) => {
                         return (
                           <Draggable className="card" key={card.id}>
                             <div className="title">
@@ -137,7 +180,17 @@ class Boards extends Component {
                             <div className="description">
                               <p>{card.description}</p>
                             </div>
-                            <FontAwesomeIcon icon={faEdit} />
+                            <FontAwesomeIcon onClick={() =>
+                              this.setState({
+                                showModal: true,
+                                laneid: ind,
+                                isEdit: true,
+                                editTitle: card.title,
+                                editDescription: card.description,
+                                cardID: cardInd,
+                                editTags: card.tags,
+                              })
+                            } icon={faEdit} />
                           </Draggable>
                         );
                       })}
@@ -161,8 +214,14 @@ class Boards extends Component {
             <Modal
               show={showModal}
               onHide={this.closeModal}
-              _addcard={this.addCard}
+              addcard={this.addCard}
               laneid={laneid}
+              isEdit={isEdit}
+              editTitle={editTitle}
+              editDescription={editDescription}
+              updateCardDetails={this.updateCardDetails}
+              cardID={cardID}
+              editTags={editTags}
             />
           </Container>
         </BootstapContainer>
