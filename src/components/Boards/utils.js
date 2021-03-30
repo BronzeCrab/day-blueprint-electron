@@ -26,10 +26,10 @@ export const handleDateExp = (date) => {
   if (day <= 9) {
     day = `0${day}`;
   }
-  let month = date.getMonth() + 1
+  let month = date.getMonth() + 1;
   if (month <= 9) {
-    month = `0${ month}`;
+    month = `0${month}`;
   }
   const year = date.getFullYear();
   return `${year}-${month}-${day}`;
-}
+};
