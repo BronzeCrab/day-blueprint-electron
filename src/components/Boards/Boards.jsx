@@ -8,19 +8,23 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Modal from './Modal';
 import Header from '../Header';
 import { applyDrag, getTodayDate, handleDateExp } from './utils';
-import { getActiveDataAndDate, setActiveDate } from './json_storage';
+import { getActiveDataAndDate, setActiveBoard } from './json_storage';
 
 
 const initData = require('./data.json');
 
-const dataAndDate = getActiveDataAndDate(initData);
-const mockedData = dataAndDate[0];
-let activeDate = dataAndDate[1];
+const dataAndDate = getActiveDataAndDate(initData)
 
-if (activeDate === "") {
+let activeDate = null
+let mockedData = null
+
+if (dataAndDate === undefined) {
   activeDate = getTodayDate();
-  setActiveDate(activeDate)
-} 
+  mockedData = setActiveBoard(activeDate);
+}
+else {
+  [mockedData, activeDate] = dataAndDate
+}
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
