@@ -9,7 +9,7 @@ export const DatePicker = ({ handleChange, dateVal }) => {
       <div className="calendar-input-wraper">
         <input onChange={handleChange} value={dateVal} type="date" className="calendar-input" />
       </div>
-      <FontAwesomeIcon className="calendar-btn" icon={faCalendarDay} />
+      <FontAwesomeIcon className="calendar-icon" icon={faCalendarDay} />
     </div>
   )
 }
