@@ -7,7 +7,11 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from './Modal';
 import Header from '../Header';
-import { applyDrag, getTodayDate, handleDateExp } from './utils';
+import {
+  applyDrag,
+  getTodayDate,
+  handleDateExp
+} from './utils';
 
 const mockedData = require('./data.json');
 
@@ -36,19 +40,24 @@ class Boards extends Component {
       isEdit: false,
       editTitle: '',
       editDescription: '',
-      editTags: '',
+      editTags: [],
       cardID: '',
     });
   };
 
-  addCard = ({ title, description, laneid, tags }) => {
+  addCard = ({
+    title,
+    description,
+    laneid,
+    tags
+  }) => {
     const { data } = this.state;
     const copiedData = JSON.parse(JSON.stringify(data));
     copiedData.lanes[laneid].cards.push({
       title,
       description,
       id: btoa(Math.random()).substring(0, 12),
-      tags: tags.split(' '),
+      tags,
     });
     this.setState({ data: copiedData });
     this.closeModal();
@@ -111,15 +120,25 @@ class Boards extends Component {
     });
   }
 
-  updateCardDetails = ({ title, description, laneid, cardID, tags }) => {
+  updateCardDetails = ({
+    title,
+    description,
+    laneid,
+    cardID,
+    tags
+  }) => {
     const { data } = this.state;
+
+    // Here we are using deep cloning method to remove the reference from the data object.
     const copiedData = JSON.parse(JSON.stringify(data));
     copiedData.lanes[laneid].cards[cardID].title = title;
     copiedData.lanes[laneid].cards[cardID].description = description;
-    copiedData.lanes[laneid].cards[cardID].tags = tags.split(' ');
+    copiedData.lanes[laneid].cards[cardID].tags = tags;
     this.setState({
       data: copiedData
     });
+
+    // use to close the modal.
     this.closeModal();
   }
 
@@ -146,71 +165,69 @@ class Boards extends Component {
         />
         <BootstapContainer className="board-container">
           <Container orientation="horizontal">
-            {data.lanes.map((column, ind) => {
-              return (
-                <div key={column.id} className="lane">
-                  <div className="card-container">
-                    <div className="card-column-header">
-                      <span className="column-drag-handle">&#x2630;</span>
-                      {column.name}
-                    </div>
-                    <Container
-                      {...column.props}
-                      groupName="col"
-                      onDrop={(e) => this.onCardDrop(column.id, e)}
-                      getChildPayload={(index) =>
-                        this.getCardPayload(column.id, index)
-                      }
-                      dragClass="card-ghost"
-                      dropClass="card-ghost-drop"
-                      dropPlaceholder={{
-                        animationDuration: 150,
-                        showOnTop: true,
-                        className: 'drop-preview',
-                      }}
-                      dropPlaceholderAnimationDuration={200}
-                    >
-                      {column.cards.map((card, cardInd) => {
-                        return (
-                          <Draggable className="card" key={card.id}>
-                            <div className="title">
-                              <p>{card.title}</p>
-                            </div>
-                            <hr />
-                            <div className="description">
-                              <p>{card.description}</p>
-                            </div>
-                            <FontAwesomeIcon onClick={() =>
-                              this.setState({
-                                showModal: true,
-                                laneid: ind,
-                                isEdit: true,
-                                editTitle: card.title,
-                                editDescription: card.description,
-                                cardID: cardInd,
-                                editTags: card.tags,
-                              })
-                            } icon={faEdit} />
-                          </Draggable>
-                        );
-                      })}
-                      <Button
-                        variant="link"
-                        className="header-btn"
-                        onClick={() =>
-                          this.setState({
-                            showModal: true,
-                            laneid: ind,
-                          })
-                        }
-                      >
-                        + Add card
-                      </Button>
-                    </Container>
+            {data.lanes.map((column, ind) => (
+              <div key={column.id} className="lane">
+                <div className="card-container">
+                  <div className="card-column-header">
+                    <span className="column-drag-handle">&#x2630;</span>
+                    {column.name}
                   </div>
+                  <Container
+                    {...column.props}
+                    groupName="col"
+                    onDrop={(e) => this.onCardDrop(column.id, e)}
+                    getChildPayload={(index) =>
+                      this.getCardPayload(column.id, index)
+                    }
+                    dragClass="card-ghost"
+                    dropClass="card-ghost-drop"
+                    dropPlaceholder={{
+                      animationDuration: 150,
+                      showOnTop: true,
+                      className: 'drop-preview',
+                    }}
+                    dropPlaceholderAnimationDuration={200}
+                  >
+                    {column.cards.map((card, cardInd) => {
+                      return (
+                        <Draggable className="card" key={card.id}>
+                          <div className="title">
+                            <p>{card.title}</p>
+                          </div>
+                          <hr />
+                          <div className="description">
+                            <p>{card.description}</p>
+                          </div>
+                          <FontAwesomeIcon onClick={() =>
+                            this.setState({
+                              showModal: true,
+                              laneid: ind,
+                              isEdit: true,
+                              editTitle: card.title,
+                              editDescription: card.description,
+                              cardID: cardInd,
+                              editTags: card.tags,
+                            })
+                          } icon={faEdit} />
+                        </Draggable>
+                      );
+                    })}
+                    <Button
+                      variant="link"
+                      className="header-btn"
+                      onClick={() =>
+                        this.setState({
+                          showModal: true,
+                          laneid: ind,
+                        })
+                      }
+                    >
+                      + Add card
+                      </Button>
+                  </Container>
                 </div>
-              );
-            })}
+              </div>
+            ))}
             <Modal
               show={showModal}
               onHide={this.closeModal}
