@@ -204,7 +204,7 @@ class Boards extends Component {
                           })
                         }
                       >
-                        Add card
+                        + Add card
                       </Button>
                     </Container>
                   </div>
