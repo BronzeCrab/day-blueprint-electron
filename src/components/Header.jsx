@@ -7,7 +7,7 @@ import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { DatePicker } from './Boards/DatePicker';
+import { DatePicker } from './DatePicker';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Header extends Component {

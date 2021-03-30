@@ -8,10 +8,19 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Modal from './Modal';
 import Header from '../Header';
 import { applyDrag, getTodayDate, handleDateExp } from './utils';
+import { getActiveDataAndDate, setActiveDate } from './json_storage';
 
-const mockedData = require('./data.json');
 
-const currentDate = getTodayDate();
+const initData = require('./data.json');
+
+const dataAndDate = getActiveDataAndDate(initData);
+const mockedData = dataAndDate[0];
+let activeDate = dataAndDate[1];
+
+if (activeDate === "") {
+  activeDate = getTodayDate();
+  setActiveDate(activeDate)
+} 
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Boards extends Component {
@@ -21,7 +30,7 @@ class Boards extends Component {
       showModal: false,
       laneid: '',
       data: mockedData,
-      date: currentDate,
+      date: activeDate,
       isEdit: false,
       editTitle: '',
       editDescription: '',

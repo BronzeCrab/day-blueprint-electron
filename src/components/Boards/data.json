@@ -1,50 +1,60 @@
 {
-  "lanes": [
+  "boards": [
     {
       "id": 1,
-      "name": "to do",
-      "board_id": 1,
-      "cards": [
+      "status": "active",
+      "date": "",
+      "lanes": [
         {
           "id": 1,
-          "title": "Test4",
-          "description": "Test4",
-          "tags": ["tag1", "tag2"]
+          "name": "to do",
+          "board_id": 1,
+          "cards": [
+            {
+              "id": 1,
+              "title": "Test4",
+              "description": "Test4",
+              "tags": []
+            },
+            {
+              "id": 2,
+              "title": "Test1",
+              "description": "Test1",
+              "tags": []
+            }
+          ]
         },
         {
           "id": 2,
-          "title": "Test1",
-          "description": "Test1",
-          "tags": ["tag1", "tag2"]
-        }
-      ] 
-    },
-    {
-      "id": 2,
-      "name": "doing",
-      "board_id": 1,
-      "cards": [
+          "name": "doing",
+          "board_id": 1,
+          "cards": [
+            {
+              "id": 3,
+              "title": "Test2",
+              "description": "Test2",
+              "tags": []
+            }
+          ]
+        },
         {
           "id": 3,
-          "title": "Test2",
-          "description": "Test2",
-          "tags": ["tag1", "tag2"]
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "done",
-      "board_id": 1,
-      "cards": [
-        {
-          "id": 4,
-          "title": "Test3",
-          "description": "Test3",
-          "tags": ["tag1", "tag2"]
+          "name": "done",
+          "board_id": 1,
+          "cards": [
+            {
+              "id": 4,
+              "title": "Test3",
+              "description": "Test3",
+              "tags": []
+            }
+          ]
         }
       ]
     }
   ],
-  "tags": []
+  "tags": [],
+  "boards[0]": {
+    "date": "2021-03-30"
+  }
 }
