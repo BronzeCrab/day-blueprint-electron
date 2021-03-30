@@ -10,7 +10,7 @@ export const getActiveDataAndDate = (data) => {
 export const setActiveBoard = (date_str) => {
   const editJsonFile = require("edit-json-file");
   const file = editJsonFile(`${__dirname}/components/Boards/data.json`);
-  const obj ={ id: 1, status: "active", date: date_str, lanes: [] };
+  const obj = { id: 1, status: "active", date: date_str, lanes: [] };
   file.append("boards", obj);
   file.save();
   return obj
