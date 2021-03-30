@@ -149,6 +149,7 @@ a:hover {
   height: 40px;
   color: rgba(204, 204, 204, 0);
   opacity: 0;
+  cursor: pointer;
 }
 
 .calendar-input::-webkit-inner-spin-button {

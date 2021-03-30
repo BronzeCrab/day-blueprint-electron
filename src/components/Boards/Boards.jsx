@@ -90,12 +90,6 @@ class Boards extends Component {
     });
   }
 
-  handleChangeDate = (e) => {
-    this.setState({
-      date: e.target.value,
-    });
-  }
-
   render() {
     const { date, data, laneid, showModal } = this.state;
     return (
