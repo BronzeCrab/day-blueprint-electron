@@ -5,9 +5,7 @@ import Stats from './components/Stats/Stats';
 import Navbar from './components/Navbar';
 import Boards from './components/Boards/Boards';
 
-
-const Index = (props) => {
-
+const Index = () => {
   return (
     <div className="App">
       <Navbar />
