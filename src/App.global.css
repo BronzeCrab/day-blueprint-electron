@@ -121,12 +121,12 @@ a:hover {
   color: black;
 }
 
-.exmp-wrp {
+.calendar-wraper {
   position: relative;
   width: 120px;
 }
 
-.btn-wrp {
+.calendar-input-wraper {
   display: inline-block;
   width: 100%;
   position: relative;
@@ -134,7 +134,7 @@ a:hover {
   cursor: pointer;
 }
 
-.btn-clck {
+.calendar-input {
   border: none;
   background: transparent;
   width: 100%;
@@ -142,7 +142,7 @@ a:hover {
   outline: none;
 }
 
-.btn-clck::-webkit-calendar-picker-indicator {
+.calendar-input::-webkit-calendar-picker-indicator {
   right: -10px;
   position: absolute;
   width: 78px;
@@ -151,15 +151,15 @@ a:hover {
   opacity: 0;
 }
 
-.btn-clck::-webkit-inner-spin-button {
+.calendar-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-.btn-clck::-webkit-clear-button {
+.calendar-input::-webkit-clear-button {
   margin-right: 75px;
 }
 
-.calendarBtn {
+.calendar-btn {
   height: 100%;
   box-sizing: unset;
   border: none;

@@ -5,11 +5,11 @@ import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 export const DatePicker = ({ handleChange, dateVal }) => {
 
   return (
-    <div className="exmp-wrp">
-      <div className="btn-wrp">
-        <input onChange={handleChange} value={dateVal} type="date" className="btn-clck" />
+    <div className="calendar-wraper">
+      <div className="calendar-input-wraper">
+        <input onChange={handleChange} value={dateVal} type="date" className="calendar-input" />
       </div>
-      <FontAwesomeIcon className="calendarBtn" icon={faCalendarDay} />
+      <FontAwesomeIcon className="calendar-btn" icon={faCalendarDay} />
     </div>
   )
 }
