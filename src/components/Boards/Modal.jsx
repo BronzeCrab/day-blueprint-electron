@@ -10,6 +10,8 @@ import {
   Form,
 } from 'react-bootstrap';
 
+import TagsInput from '../TagsInput/TagsInput';
+
 // eslint-disable-next-line react/prefer-stateless-function
 class Modal extends Component {
   constructor() {
@@ -17,26 +19,35 @@ class Modal extends Component {
     this.state = {
       title: '',
       description: '',
-      tags: '',
+      tags: [],
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const { title, description } = this.state;
+    const {
+      title,
+      description
+    } = this.state;
+    // I used to match values, The setState will only happen once the value changes.
     if (nextProps.editTitle !== title || nextProps.editDescription !== description) {
       this.setState({
         title: nextProps.editTitle,
         description: nextProps.editDescription,
-        tags: nextProps.editTags ? nextProps.editTags.join(' ') : '',
+        tags: nextProps.editTags ? nextProps.editTags : [],
       });
     }
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { title, description, tags } = this.state;
+    const {
+      title,
+      description,
+      tags
+    } = this.state;
     const { addcard, laneid, isEdit, updateCardDetails, cardID } = this.props;
     if (title?.trim() && description?.trim()) {
+      // Here I'm checking the edit flag, If it's true it means user want to edit the card details
       if (isEdit) {
         updateCardDetails({ title, description, laneid, cardID, tags });
       } else {
@@ -47,10 +58,20 @@ class Modal extends Component {
     }
   };
 
-  render() {
-    const { isEdit, show, onHide } = this.props;
-    const { title, description, tags } = this.state;
+  handleChangeTag = (tags) => this.setState({ tags });
 
+  render() {
+    // Here I perform destructuring of objects to access the value using ES6 method
+    const {
+      isEdit,
+      show,
+      onHide
+    } = this.props;
+    const {
+      title,
+      description,
+      tags
+    } = this.state;
     return (
       <BootstrapModal
         show={show}
@@ -71,6 +92,7 @@ class Modal extends Component {
               <InputGroup className="mb-3">
                 <Form.Control
                   value={title}
+                  // Here I perform destructuring of objects to access the value using ES6 method
                   onChange={({ target: { value } }) => this.setState({ title: value })}
                   type="Title"
                   placeholder="Enter Title"
@@ -84,6 +106,7 @@ class Modal extends Component {
                 </InputGroup.Prepend>
                 <FormControl
                   value={description}
+                  // Here I perform destructuring of objects to access the value using ES6 method
                   onChange={({ target: { value } }) =>
                     this.setState({ description: value })
                   }
@@ -94,14 +117,7 @@ class Modal extends Component {
             </Form.Group>
             <Form.Group controlId="tags">
               <InputGroup className="mb-3">
-                <FormControl
-                  onChange={({ target: { value } }) =>
-                    this.setState({ tags: value })
-                  }
-                  value={tags}
-                  placeholder="Tags"
-                  aria-label="tags"
-                />
+                <TagsInput handleChangeTag={this.handleChangeTag} tags={tags} />
               </InputGroup>
             </Form.Group>
           </BootstrapModal.Body>
