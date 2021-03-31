@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
 import { Container, Draggable } from 'react-smooth-dnd';
@@ -47,21 +48,19 @@ class Boards extends Component {
         this.setState({ data: JSON.parse(cards) });
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
-  closeModal = () => {
-    this.setState({
-      showModal: false,
-      laneid: '',
-      isEdit: false,
-      editTitle: '',
-      editDescription: '',
-      editTags: [],
-      cardID: '',
-    });
-  };
+  closeModal = () => this.setState({
+    showModal: false,
+    laneid: '',
+    isEdit: false,
+    editTitle: '',
+    editDescription: '',
+    editTags: [],
+    cardID: '',
+  });
 
   addCard = async ({ title, description, laneid, tags }) => {
     const { data } = this.state;
@@ -74,6 +73,8 @@ class Boards extends Component {
     });
     this.setState({ data: copiedData });
     this.closeModal();
+
+    // Update localStorage data after adding a new card.
     await asyncLocalStorage.setItem('cards', JSON.stringify(copiedData));
   };
 
@@ -84,7 +85,7 @@ class Boards extends Component {
     ];
   };
 
-  onCardDrop = (columnId, dropResult) => {
+  onCardDrop = async (columnId, dropResult) => {
     const { data } = this.state;
     if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
       const scene = { ...data };
@@ -98,16 +99,22 @@ class Boards extends Component {
       this.setState({
         data: scene,
       });
+
+      // After card swapping, Saving updated cards data into the localStorage.
+      await asyncLocalStorage.setItem('cards', JSON.stringify(scene));
     }
   };
 
-  deleteCards = () => {
+  deleteCards = async () => {
     const { data } = this.state;
     const copiedData = data;
     copiedData.lanes.forEach((lane) => {
       lane.cards = [];
     });
     this.setState({ data: copiedData });
+
+    // Delete cards handling, Saving updated card to the localStorage.
+    await asyncLocalStorage.setItem('cards', JSON.stringify(copiedData));
   };
 
   goLeft = () => {
@@ -128,13 +135,9 @@ class Boards extends Component {
     });
   }
 
-  handleChangeDate = (e) => {
-    this.setState({
-      date: e.target.value,
-    });
-  }
+  handleChangeDate = (e) => this.setState({ date: e.target.value });
 
-  updateCardDetails = ({
+  updateCardDetails = async ({
     title,
     description,
     laneid,
@@ -148,12 +151,16 @@ class Boards extends Component {
     copiedData.lanes[laneid].cards[cardID].title = title;
     copiedData.lanes[laneid].cards[cardID].description = description;
     copiedData.lanes[laneid].cards[cardID].tags = tags;
+
     this.setState({
       data: copiedData
     });
 
     // use to close the modal.
     this.closeModal();
+
+    // update localStorage cards data after updating card title, description, tags...
+    await asyncLocalStorage.setItem('cards', JSON.stringify(copiedData));
   }
 
   render() {
@@ -211,6 +218,7 @@ class Boards extends Component {
                           <hr />
                           <div className="description">
                             <p>{card.description}</p>
+
                           </div>
                           <FontAwesomeIcon onClick={() =>
                             this.setState({
