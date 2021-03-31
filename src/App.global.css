@@ -180,10 +180,10 @@ a:hover {
 }
 
 .react-tagsinput-tag {
-  background-color: #cde69c;
+  background-color: #e1effc;
   border-radius: 2px;
-  border: 1px solid #a5d24a;
-  color: #638421;
+  border: 1px solid #e1effc;
+  color: black;
   display: inline-block;
   font-family: sans-serif;
   font-size: 13px;
@@ -195,6 +195,7 @@ a:hover {
 
 .react-tagsinput-remove {
   cursor: pointer;
+  background-color: #e1effc;
   font-weight: bold;
 }
 
