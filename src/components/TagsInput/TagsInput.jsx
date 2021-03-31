@@ -2,25 +2,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TagsInput from 'react-tagsinput';
+import Autosuggest from 'react-autosuggest';
 
-const CustomTagsInput = props => {
-    // Here I perform destructuring of objects to access the value using ES6 method
-    const {
-        handleChangeTag,
-        tags,
-    } = props;
-    return (
-        <TagsInput
-            className="form-control tagInputField"
-            value={tags}
-            inputProps={{
-                className: 'tagInput',
-                placeholder: 'Tags'
-            }}
-            onChange={handleChangeTag}
-        />
-    );
-};
+import suggestionList from './suggestionList';
+
+class CustomTagsInput extends React.Component {
+
+    render() {
+        const {
+            handleChangeTag,
+            tags,
+        } = this.props;
+
+        function autocompleteRenderInput({ addTag, ...props }) {
+            const handleOnChange = (e, { newValue, method }) => {
+                if (method === 'enter') {
+                    e.preventDefault()
+                } else {
+                    props.onChange(e)
+                }
+            }
+
+            const inputValue = (props.value && props.value.trim().toLowerCase()) || ''
+            const inputLength = inputValue.length
+
+            const suggestions = suggestionList().filter((state) => {
+                return state.name.toLowerCase().slice(0, inputLength) === inputValue
+            })
+
+            return (
+                <Autosuggest
+                    ref={props.ref}
+                    suggestions={suggestions}
+                    shouldRenderSuggestions={(value) => value && value.trim().length > 0}
+                    getSuggestionValue={(suggestion) => suggestion.name}
+                    renderSuggestion={(suggestion) => <span>{suggestion.name}</span>}
+                    inputProps={{ ...props, onChange: handleOnChange }}
+                    onSuggestionSelected={(e, { suggestion }) => {
+                        addTag(suggestion.name)
+                    }}
+                    onSuggestionsClearRequested={() => { }}
+                    onSuggestionsFetchRequested={() => { }}
+                />
+            )
+        }
+
+        return (
+            <TagsInput
+                className="form-control tagInputField"
+                value={tags}
+                inputProps={{
+                    className: 'tagInput',
+                    placeholder: 'Tags'
+                }}
+                renderInput={autocompleteRenderInput}
+                onChange={handleChangeTag}
+            />
+        );
+    }
+}
+
 
 // The propType is used to make sure the props types are the same as required
 CustomTagsInput.propTypes = {
