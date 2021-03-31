@@ -10,7 +10,8 @@ import Header from '../Header';
 import {
   applyDrag,
   getTodayDate,
-  handleDateExp
+  handleDateExp,
+  asyncLocalStorage,
 } from './utils';
 
 const mockedData = require('./data.json');
@@ -33,6 +34,23 @@ class Boards extends Component {
     };
   }
 
+  componentDidMount() {
+    this.checkStorage();
+  };
+
+  checkStorage = async () => {
+    try {
+      const cards = await asyncLocalStorage.getItem('cards');
+      if (!cards) {
+        await asyncLocalStorage.setItem('cards', JSON.stringify(mockedData));
+      } else {
+        this.setState({ data: JSON.parse(cards) });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   closeModal = () => {
     this.setState({
       showModal: false,
@@ -45,12 +63,7 @@ class Boards extends Component {
     });
   };
 
-  addCard = ({
-    title,
-    description,
-    laneid,
-    tags
-  }) => {
+  addCard = async ({ title, description, laneid, tags }) => {
     const { data } = this.state;
     const copiedData = JSON.parse(JSON.stringify(data));
     copiedData.lanes[laneid].cards.push({
@@ -61,6 +74,7 @@ class Boards extends Component {
     });
     this.setState({ data: copiedData });
     this.closeModal();
+    await asyncLocalStorage.setItem('cards', JSON.stringify(copiedData));
   };
 
   getCardPayload = (columnId, index) => {
