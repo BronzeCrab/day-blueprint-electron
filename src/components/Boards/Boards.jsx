@@ -36,10 +36,11 @@ class Boards extends Component {
   }
 
   componentDidMount() {
-    this.checkStorage();
+    this.checkStorageForCards();
+    this.checkStorageForDate();
   };
 
-  checkStorage = async () => {
+  checkStorageForCards = async () => {
     try {
       const cards = await asyncLocalStorage.getItem('cards');
       if (!cards) {
@@ -47,6 +48,15 @@ class Boards extends Component {
       } else {
         this.setState({ data: JSON.parse(cards) });
       }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  checkStorageForDate = async () => {
+    try {
+      const storageDate = await asyncLocalStorage.getItem('boardDate');
+      storageDate && this.setState({ date: storageDate });
     } catch (err) {
       console.error(err);
     }
@@ -117,25 +127,34 @@ class Boards extends Component {
     await asyncLocalStorage.setItem('cards', JSON.stringify(copiedData));
   };
 
-  goLeft = () => {
+  goLeft = async () => {
     const { date } = this.state;
     const yesterday = new Date(date);
     yesterday.setDate(yesterday.getDate() - 1);
     this.setState({
       date: handleDateExp(yesterday),
     });
+
+    // Save the updated date in localStorage when user clicks on the left icon
+    asyncLocalStorage.setItem('boardDate', handleDateExp(yesterday));
   }
 
-  goRight = () => {
+  goRight = async () => {
     const { date } = this.state;
     const tomorrow = new Date(date);
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.setState({
       date: handleDateExp(tomorrow),
     });
+    // Save the updated date in the localStorage when user clicks on right icon
+    await asyncLocalStorage.setItem('boardDate', handleDateExp(tomorrow));
   }
 
-  handleChangeDate = (e) => this.setState({ date: e.target.value });
+  handleChangeDate = async ({ target: { value } }) => {
+    this.setState({ date: value });
+    // Save the updated date in localStorage
+    await asyncLocalStorage.setItem('boardDate', value);
+  }
 
   updateCardDetails = async ({
     title,

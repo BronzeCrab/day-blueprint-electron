@@ -7,13 +7,20 @@ import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { DatePicker } from './Boards/DatePicker';
+import DatePicker from './Boards/DatePicker';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Header extends Component {
 
   render() {
-    const { deleteCards, copyCards, goLeft, goRight, date, handleChangeDate } = this.props;
+    const {
+      deleteCards,
+      copyCards,
+      goLeft,
+      goRight,
+      date,
+      handleChangeDate
+    } = this.props;
     return (
       <Container className="header-container">
         <Row>
