@@ -263,31 +263,29 @@ class Boards extends Component {
                     }}
                     dropPlaceholderAnimationDuration={200}
                   >
-                    {column.cards[date]?.map((card, cardInd) => {
-                      return (
-                        <Draggable className="card" key={card.id}>
-                          <div className="title">
-                            <p>{card.title}</p>
-                          </div>
-                          <hr />
-                          <div className="description">
-                            <p>{card.description}</p>
+                    {column.cards[date]?.map((card, cardInd) => (
+                      <Draggable className="card" key={card.id}>
+                        <div className="title">
+                          <p>{card.title}</p>
+                        </div>
+                        <hr />
+                        <div className="description">
+                          <p>{card.description}</p>
 
-                          </div>
-                          <FontAwesomeIcon onClick={() =>
-                            this.setState({
-                              showModal: true,
-                              laneid: ind,
-                              isEdit: true,
-                              editTitle: card.title,
-                              editDescription: card.description,
-                              cardID: cardInd,
-                              editTags: card.tags,
-                            })
-                          } icon={faEdit} />
-                        </Draggable>
-                      );
-                    })}
+                        </div>
+                        <FontAwesomeIcon onClick={() =>
+                          this.setState({
+                            showModal: true,
+                            laneid: ind,
+                            isEdit: true,
+                            editTitle: card.title,
+                            editDescription: card.description,
+                            cardID: cardInd,
+                            editTags: card.tags,
+                          })
+                        } icon={faEdit} />
+                      </Draggable>
+                    ))}
                     <Button
                       variant="link"
                       className="header-btn"
