@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -100,7 +101,7 @@ class Boards extends Component {
 
   onCardDrop = async (columnId, dropResult) => {
     const { data, date } = this.state;
-    
+
     if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
       const scene = { ...data };
       const column = scene.lanes.filter((p) => p.id === columnId)[0];
@@ -110,10 +111,11 @@ class Boards extends Component {
       newColumn.cards[date] = applyDrag(newColumn.cards[date], dropResult);
       scene.lanes.splice(columnIndex, 1, newColumn);
 
+
       this.setState({
         data: scene,
       });
-      
+
 
       // After card swapping, Saving updated cards data into the localStorage.
       await asyncLocalStorage.setItem('boards', JSON.stringify(scene));
@@ -143,9 +145,7 @@ class Boards extends Component {
 
     // Handle previous date data
     const scene = JSON.parse(JSON.stringify(data));
-    scene.lanes.forEach(lane => {
-      lane.cards[updatedDate] = lane.cards[updatedDate] ? lane.cards[updatedDate] : [];
-    })
+    scene.lanes.forEach(lane => lane.cards[updatedDate] = lane.cards[updatedDate] ? lane.cards[updatedDate] : []);
 
     this.setState({
       date: updatedDate,
