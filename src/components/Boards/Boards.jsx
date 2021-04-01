@@ -123,33 +123,37 @@ class Boards extends Component {
   };
 
   copyCardsFromPrevDate = async () => {
-    const { data, date } = this.state;
-    const copiedData = data;
-    const yesterday = new Date(date);
-    yesterday.setDate(yesterday.getDate() - 1); 
-    const updatedDate = handleDateExp(yesterday);
-    // Grab selected date and copy cards from prev date
-    copiedData.lanes.forEach((lane) => {
-      lane.cards[date] = lane.cards[updatedDate];
-    });
+    if (window.confirm('Are you sure to copy all cards from previous date?')) {
+      const { data, date } = this.state;
+      const copiedData = data;
+      const yesterday = new Date(date);
+      yesterday.setDate(yesterday.getDate() - 1); 
+      const updatedDate = handleDateExp(yesterday);
+      // Grab selected date and copy cards from prev date
+      copiedData.lanes.forEach((lane) => {
+        lane.cards[date] = lane.cards[updatedDate];
+      });
 
-    this.setState({ data: copiedData });
-    // Delete cards handling, Saving updated card to the localStorage.
-    await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+      this.setState({ data: copiedData });
+      // Delete cards handling, Saving updated card to the localStorage.
+      await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+    };
   };
 
   deleteCards = async () => {
-    const { data, date } = this.state;
-    const copiedData = data;
+    if (window.confirm('Are you sure to delete all cards for current date?')) {
+      const { data, date } = this.state;
+      const copiedData = data;
 
-    // Grab selected date and delete cards of specific date
-    copiedData.lanes.forEach((lane) => {
-      lane.cards[date] = [];
-    });
-    this.setState({ data: copiedData });
+      // Grab selected date and delete cards of specific date
+      copiedData.lanes.forEach((lane) => {
+        lane.cards[date] = [];
+      });
+      this.setState({ data: copiedData });
 
-    // Delete cards handling, Saving updated card to the localStorage.
-    await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+      // Delete cards handling, Saving updated card to the localStorage.
+      await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+    };
   };
 
   goLeft = async () => {
