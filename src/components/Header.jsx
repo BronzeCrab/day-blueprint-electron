@@ -14,8 +14,8 @@ class Header extends Component {
 
   render() {
     const {
+      copyCardsFromPrevDate,
       deleteCards,
-      copyCards,
       goLeft,
       goRight,
       date,
@@ -37,7 +37,7 @@ class Header extends Component {
               <Button
                 variant="primary"
                 className="header-btn"
-                onClick={copyCards}
+                onClick={copyCardsFromPrevDate}
               >
                 Copy
               </Button>

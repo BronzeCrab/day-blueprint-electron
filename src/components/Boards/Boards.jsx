@@ -122,6 +122,22 @@ class Boards extends Component {
     }
   };
 
+  copyCardsFromPrevDate = async () => {
+    const { data, date } = this.state;
+    const copiedData = data;
+    const yesterday = new Date(date);
+    yesterday.setDate(yesterday.getDate() - 1); 
+    const updatedDate = handleDateExp(yesterday);
+    // Grab selected date and copy cards from prev date
+    copiedData.lanes.forEach((lane) => {
+      lane.cards[date] = lane.cards[updatedDate];
+    });
+
+    this.setState({ data: copiedData });
+    // Delete cards handling, Saving updated card to the localStorage.
+    await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+  };
+
   deleteCards = async () => {
     const { data, date } = this.state;
     const copiedData = data;
@@ -153,7 +169,7 @@ class Boards extends Component {
     });
 
     // Save the updated date in localStorage when user clicks on the left icon
-    asyncLocalStorage.setItem('boardDate', updatedDate);
+    await asyncLocalStorage.setItem('boardDate', updatedDate);
   }
 
   goRight = async () => {
@@ -232,6 +248,7 @@ class Boards extends Component {
     return (
       <>
         <Header
+          copyCardsFromPrevDate={this.copyCardsFromPrevDate}
           deleteCards={this.deleteCards}
           goLeft={this.goLeft}
           goRight={this.goRight}
