@@ -33,3 +33,12 @@ export const handleDateExp = (date) => {
   const year = date.getFullYear();
   return `${year}-${month}-${day}`;
 };
+
+export const asyncLocalStorage = {
+  setItem(key, value) {
+    return Promise.resolve().then(() => localStorage.setItem(key, value));
+  },
+  getItem(key) {
+    return Promise.resolve().then(() => localStorage.getItem(key));
+  },
+};
