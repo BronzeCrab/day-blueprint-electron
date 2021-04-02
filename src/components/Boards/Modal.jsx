@@ -69,7 +69,10 @@ class Modal extends Component {
     copiedData.tags = updatedTags;
     this.setState({ tags });
 
+    // Set updated tags to the localStorage
     await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+
+    // Get tags from localStorage to use in tagInput component
     callback();
   };
 
