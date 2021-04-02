@@ -3,16 +3,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TagsInput from 'react-tagsinput';
 import Autosuggest from 'react-autosuggest';
+import { asyncLocalStorage, capitalizeFirstLetter } from '../utils';
 
-import suggestionList from './suggestionList';
 
 class CustomTagsInput extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            suggestionList: [],
+        };
+    };
+
+    componentDidMount() {
+        this.getTagsFromStorage();
+    };
+
+    getTagsFromStorage = async () => {
+        try {
+            const asyncData = JSON.parse(await asyncLocalStorage.getItem('boards'));
+
+            if (asyncData?.tags) {
+                const formated = asyncData?.tags.map(tag => ({ abbr: capitalizeFirstLetter(tag), name: capitalizeFirstLetter(tag) }));
+                this.setState({ suggestionList: formated });
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     render() {
         const {
             handleChangeTag,
             tags,
         } = this.props;
+
+        const {
+            suggestionList,
+        } = this.state;
 
         function autocompleteRenderInput({ addTag, ...props }) {
             const handleOnChange = (e, { newValue, method }) => {
@@ -26,7 +53,7 @@ class CustomTagsInput extends React.Component {
             const inputValue = (props.value && props.value.trim().toLowerCase()) || ''
             const inputLength = inputValue.length
 
-            const suggestions = suggestionList().filter((state) => {
+            const suggestions = suggestionList.filter((state) => {
                 return state.name.toLowerCase().slice(0, inputLength) === inputValue
             })
 
@@ -56,7 +83,7 @@ class CustomTagsInput extends React.Component {
                     placeholder: 'Tags'
                 }}
                 renderInput={autocompleteRenderInput}
-                onChange={handleChangeTag}
+                onChange={(currentTags) => handleChangeTag(currentTags, () => this.getTagsFromStorage())}
             />
         );
     }

@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap';
 
 import TagsInput from './TagsInput/TagsInput';
+import { asyncLocalStorage } from './utils';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Modal extends Component {
@@ -58,7 +59,22 @@ class Modal extends Component {
     }
   };
 
-  handleChangeTag = (tags) => this.setState({ tags });
+  handleChangeTag = async (tags, callback) => {
+    const copiedData = await JSON.parse(await asyncLocalStorage.getItem('boards'));
+    let updatedTags = [...copiedData?.tags, ...tags].map(tag => tag.toLowerCase());
+
+    // Remove repeated values from the array
+    updatedTags = [...new Set(updatedTags)];
+
+    copiedData.tags = updatedTags;
+    this.setState({ tags });
+
+    // Set updated tags to the localStorage
+    await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+
+    // Get tags from localStorage to use in tagInput component
+    callback();
+  };
 
   render() {
     // Here I perform destructuring of objects to access the value using ES6 method

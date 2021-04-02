@@ -42,3 +42,7 @@ export const asyncLocalStorage = {
     return Promise.resolve().then(() => localStorage.getItem(key));
   },
 };
+
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};

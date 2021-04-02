@@ -75,7 +75,8 @@ class Boards extends Component {
   });
 
   addCard = async ({ title, description, laneid, tags }) => {
-    const { data, date } = this.state;
+    const { date } = this.state;
+    const data = JSON.parse(await asyncLocalStorage.getItem('boards'));
     const copiedData = JSON.parse(JSON.stringify(data));
     if (!copiedData.lanes[laneid].cards[date]) {
       copiedData.lanes[laneid].cards[date] = [];
