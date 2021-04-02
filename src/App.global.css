@@ -256,3 +256,8 @@ a:hover {
 .react-autosuggest__suggestion--focused {
   background-color: #ddd;
 }
+
+.chartjs-render-monitor {
+  width: 800px;
+  margin-bottom: 350px;
+}
