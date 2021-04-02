@@ -10,7 +10,7 @@ import {
   Form,
 } from 'react-bootstrap';
 
-import TagsInput from '../TagsInput/TagsInput';
+import TagsInput from './TagsInput/TagsInput';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Modal extends Component {

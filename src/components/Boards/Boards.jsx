@@ -1,3 +1,6 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
 import { Container, Draggable } from 'react-smooth-dnd';
@@ -10,7 +13,8 @@ import Header from '../Header';
 import {
   applyDrag,
   getTodayDate,
-  handleDateExp
+  handleDateExp,
+  asyncLocalStorage,
 } from './utils';
 
 const mockedData = require('./data.json');
@@ -33,113 +37,204 @@ class Boards extends Component {
     };
   }
 
-  closeModal = () => {
-    this.setState({
-      showModal: false,
-      laneid: '',
-      isEdit: false,
-      editTitle: '',
-      editDescription: '',
-      editTags: [],
-      cardID: '',
-    });
+  componentDidMount() {
+    this.checkStorageForCards();
+    this.checkStorageForDate();
   };
 
-  addCard = ({
-    title,
-    description,
-    laneid,
-    tags
-  }) => {
-    const { data } = this.state;
+  checkStorageForCards = async () => {
+    try {
+      const cards = await asyncLocalStorage.getItem('boards');
+      if (!cards) {
+        await asyncLocalStorage.setItem('boards', JSON.stringify(mockedData));
+      } else {
+        this.setState({ data: JSON.parse(cards) });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  checkStorageForDate = async () => {
+    try {
+      const storageDate = await asyncLocalStorage.getItem('boardDate');
+      storageDate && this.setState({ date: storageDate });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  closeModal = () => this.setState({
+    showModal: false,
+    laneid: '',
+    isEdit: false,
+    editTitle: '',
+    editDescription: '',
+    editTags: [],
+    cardID: '',
+  });
+
+  addCard = async ({ title, description, laneid, tags }) => {
+    const { data, date } = this.state;
     const copiedData = JSON.parse(JSON.stringify(data));
-    copiedData.lanes[laneid].cards.push({
+    if (!copiedData.lanes[laneid].cards[date]) {
+      copiedData.lanes[laneid].cards[date] = [];
+    }
+    copiedData.lanes[laneid].cards[date].push({
       title,
       description,
       id: btoa(Math.random()).substring(0, 12),
       tags,
     });
+
     this.setState({ data: copiedData });
     this.closeModal();
+
+    // Update localStorage data after adding a new card.
+    await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
   };
 
   getCardPayload = (columnId, index) => {
-    const { data } = this.state;
-    return data.lanes.filter((p) => p.id === columnId)[0].cards[
-      index
-    ];
+    const { data, date } = this.state;
+    return data.lanes.filter((p) => p.id === columnId)[0].cards[date][index];
   };
 
-  onCardDrop = (columnId, dropResult) => {
-    const { data } = this.state;
+  onCardDrop = async (columnId, dropResult) => {
+    const { data, date } = this.state;
+
     if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
       const scene = { ...data };
       const column = scene.lanes.filter((p) => p.id === columnId)[0];
       const columnIndex = scene.lanes.indexOf(column);
 
       const newColumn = { ...column };
-      newColumn.cards = applyDrag(newColumn.cards, dropResult);
+      newColumn.cards[date] = applyDrag(newColumn.cards[date], dropResult);
       scene.lanes.splice(columnIndex, 1, newColumn);
+
 
       this.setState({
         data: scene,
       });
+
+
+      // After card swapping, Saving updated cards data into the localStorage.
+      await asyncLocalStorage.setItem('boards', JSON.stringify(scene));
     }
   };
 
-  deleteCards = () => {
-    const { data } = this.state;
-    const copiedData = data;
-    copiedData.lanes.forEach((lane) => {
-      lane.cards = [];
-    });
-    this.setState({ data: copiedData });
+  copyCardsFromPrevDate = async () => {
+    if (window.confirm('Are you sure to copy all cards from previous date?')) {
+      const { data, date } = this.state;
+      const copiedData = data;
+      const yesterday = new Date(date);
+      yesterday.setDate(yesterday.getDate() - 1); 
+      const updatedDate = handleDateExp(yesterday);
+      // Grab selected date and copy cards from prev date
+      copiedData.lanes.forEach((lane) => {
+        lane.cards[date] = lane.cards[updatedDate];
+      });
+
+      this.setState({ data: copiedData });
+      // Delete cards handling, Saving updated card to the localStorage.
+      await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+    };
   };
 
-  goLeft = () => {
-    const { date } = this.state;
+  deleteCards = async () => {
+    if (window.confirm('Are you sure to delete all cards for current date?')) {
+      const { data, date } = this.state;
+      const copiedData = data;
+
+      // Grab selected date and delete cards of specific date
+      copiedData.lanes.forEach((lane) => {
+        lane.cards[date] = [];
+      });
+      this.setState({ data: copiedData });
+
+      // Delete cards handling, Saving updated card to the localStorage.
+      await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+    };
+  };
+
+  goLeft = async () => {
+    const { date, data } = this.state;
     const yesterday = new Date(date);
     yesterday.setDate(yesterday.getDate() - 1);
+
+    const updatedDate = handleDateExp(yesterday);
+
+    // Handle previous date data
+    const scene = JSON.parse(JSON.stringify(data));
+    scene.lanes.forEach(lane => lane.cards[updatedDate] = lane.cards[updatedDate] ? lane.cards[updatedDate] : []);
+
     this.setState({
-      date: handleDateExp(yesterday),
+      date: updatedDate,
+      data: scene,
     });
+
+    // Save the updated date in localStorage when user clicks on the left icon
+    await asyncLocalStorage.setItem('boardDate', updatedDate);
   }
 
-  goRight = () => {
-    const { date } = this.state;
+  goRight = async () => {
+    const { date, data } = this.state;
     const tomorrow = new Date(date);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    this.setState({
-      date: handleDateExp(tomorrow),
+
+    const updatedDate = handleDateExp(tomorrow);
+
+    // Handle next date date
+    const scene = JSON.parse(JSON.stringify(data));
+    scene.lanes.forEach(lane => {
+      lane.cards[updatedDate] = lane.cards[updatedDate] ? lane.cards[updatedDate] : [];
     });
+
+    this.setState({
+      date: updatedDate,
+      data: scene,
+    });
+
+    // Save the updated date in the localStorage when user clicks on right icon
+    await asyncLocalStorage.setItem('boardDate', updatedDate);
   }
 
-  handleChangeDate = (e) => {
-    this.setState({
-      date: e.target.value,
+  handleChangeDate = async ({ target: { value } }) => {
+    const { data } = this.state;
+    const scene = JSON.parse(JSON.stringify(data));
+    scene.lanes.forEach(lane => {
+      lane.cards[value] = lane.cards[value] ? lane.cards[value] : [];
     });
+
+    this.setState({ date: value, data: scene });
+
+    // Save the updated date in localStorage
+    await asyncLocalStorage.setItem('boardDate', value);
   }
 
-  updateCardDetails = ({
+  updateCardDetails = async ({
     title,
     description,
     laneid,
     cardID,
     tags
   }) => {
-    const { data } = this.state;
+    const { data, date } = this.state;
 
     // Here we are using deep cloning method to remove the reference from the data object.
     const copiedData = JSON.parse(JSON.stringify(data));
-    copiedData.lanes[laneid].cards[cardID].title = title;
-    copiedData.lanes[laneid].cards[cardID].description = description;
-    copiedData.lanes[laneid].cards[cardID].tags = tags;
+    copiedData.lanes[laneid].cards[date][cardID].title = title;
+    copiedData.lanes[laneid].cards[date][cardID].description = description;
+    copiedData.lanes[laneid].cards[date][cardID].tags = tags;
+
     this.setState({
       data: copiedData
     });
 
-    // use to close the modal.
+    // Closing the modal after update card details.
     this.closeModal();
+
+    // update localStorage cards data after updating card title, description, tags...
+    await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
   }
 
   render() {
@@ -157,6 +252,7 @@ class Boards extends Component {
     return (
       <>
         <Header
+          copyCardsFromPrevDate={this.copyCardsFromPrevDate}
           deleteCards={this.deleteCards}
           goLeft={this.goLeft}
           goRight={this.goRight}
@@ -188,30 +284,29 @@ class Boards extends Component {
                     }}
                     dropPlaceholderAnimationDuration={200}
                   >
-                    {column.cards.map((card, cardInd) => {
-                      return (
-                        <Draggable className="card" key={card.id}>
-                          <div className="title">
-                            <p>{card.title}</p>
-                          </div>
-                          <hr />
-                          <div className="description">
-                            <p>{card.description}</p>
-                          </div>
-                          <FontAwesomeIcon onClick={() =>
-                            this.setState({
-                              showModal: true,
-                              laneid: ind,
-                              isEdit: true,
-                              editTitle: card.title,
-                              editDescription: card.description,
-                              cardID: cardInd,
-                              editTags: card.tags,
-                            })
-                          } icon={faEdit} />
-                        </Draggable>
-                      );
-                    })}
+                    {column.cards[date]?.map((card, cardInd) => (
+                      <Draggable className="card" key={card.id}>
+                        <div className="title">
+                          <p>{card.title}</p>
+                        </div>
+                        <hr />
+                        <div className="description">
+                          <p>{card.description}</p>
+
+                        </div>
+                        <FontAwesomeIcon onClick={() =>
+                          this.setState({
+                            showModal: true,
+                            laneid: ind,
+                            isEdit: true,
+                            editTitle: card.title,
+                            editDescription: card.description,
+                            cardID: cardInd,
+                            editTags: card.tags,
+                          })
+                        } icon={faEdit} />
+                      </Draggable>
+                    ))}
                     <Button
                       variant="link"
                       className="header-btn"
@@ -244,7 +339,7 @@ class Boards extends Component {
         </BootstapContainer>
       </>
     );
-  }
-}
+  };
+};
 
 export default Boards;
