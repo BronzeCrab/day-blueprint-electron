@@ -61,7 +61,7 @@ class Modal extends Component {
 
   handleChangeTag = async (tags, callback) => {
     const copiedData = await JSON.parse(await asyncLocalStorage.getItem('boards'));
-    let updatedTags = [...copiedData?.tags, ...tags].filter(tag => tag.toLowerCase());
+    let updatedTags = [...copiedData?.tags, ...tags].map(tag => tag.toLowerCase());
 
     // Remove repeated values from the array
     updatedTags = [...new Set(updatedTags)];
