@@ -83,7 +83,7 @@ class CustomTagsInput extends React.Component {
                     placeholder: 'Tags'
                 }}
                 renderInput={autocompleteRenderInput}
-                onChange={handleChangeTag}
+                onChange={(currentTags) => handleChangeTag(currentTags, () => this.getTagsFromStorage())}
             />
         );
     }

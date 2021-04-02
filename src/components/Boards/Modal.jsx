@@ -59,7 +59,7 @@ class Modal extends Component {
     }
   };
 
-  handleChangeTag = async (tags) => {
+  handleChangeTag = async (tags, callback) => {
     const copiedData = await JSON.parse(await asyncLocalStorage.getItem('boards'));
     let updatedTags = [...copiedData?.tags, ...tags].filter(tag => tag.toLowerCase());
 
@@ -70,6 +70,7 @@ class Modal extends Component {
     this.setState({ tags });
 
     await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+    callback();
   };
 
   render() {
