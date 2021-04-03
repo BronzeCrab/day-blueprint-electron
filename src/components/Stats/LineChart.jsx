@@ -53,13 +53,16 @@ class LineChart extends React.Component {
     }).forEach(function(key) {
       data.labels.push(key);
       data.datasets[0].data.push(localStorageData.lanes[2].cards[key].length);
-
+      console.log(key)
       let totalNumOfCardsForDate = 0;
       for (let i = 0; i < 3; i+=1) {
+        console.log(localStorageData.lanes[i].cards[key].length);
         totalNumOfCardsForDate += localStorageData.lanes[i].cards[key].length;
       }
+      console.log('end1')
+      console.log(totalNumOfCardsForDate)
       data.datasets[1].data.push(totalNumOfCardsForDate);
-    })  
+    })
 
     return (<Line data={data} options={options} />)
   }
