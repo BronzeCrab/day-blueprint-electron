@@ -288,8 +288,9 @@ class Boards extends Component {
                   >
                     {column.cards[date]?.map((card, cardInd) => {
                       let description = '';
+                      // Extracting object key which is dynamic (Changes everytime)
                       const key = Object.keys(JSON.parse(card.description)._immutable?.currentContent?.blockMap);
-                      if(key && key?.length){
+                      if(key?.length){
                         description = JSON.parse(card.description)._immutable?.currentContent?.blockMap[key[0]]?.text
                       }
                       return <Draggable className="card" key={card.id}>
@@ -299,7 +300,6 @@ class Boards extends Component {
                         <hr />
                         <div className="description">
                           <p>{description}</p>
-
                         </div>
                         <FontAwesomeIcon onClick={() =>
                           this.setState({
