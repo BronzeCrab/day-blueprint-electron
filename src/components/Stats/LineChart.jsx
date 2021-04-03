@@ -17,6 +17,13 @@ const data = {
       backgroundColor: 'rgb(60, 179, 113)',
       borderColor: 'rgba(123, 239, 178, 1)',
     },
+    {
+      label: 'Total number of cards per day',
+      data: [],
+      fill: false,
+      backgroundColor: '#003366',
+      borderColor: '#003366',
+    }
   ],
 }
 
@@ -46,7 +53,13 @@ class LineChart extends React.Component {
     }).forEach(function(key) {
       data.labels.push(key);
       data.datasets[0].data.push(localStorageData.lanes[2].cards[key].length);
-    })
+
+      let totalNumOfCardsForDate = 0;
+      for (let i = 0; i < 3; i+=1) {
+        totalNumOfCardsForDate += localStorageData.lanes[i].cards[key].length;
+      }
+      data.datasets[1].data.push(totalNumOfCardsForDate);
+    })  
 
     return (<Line data={data} options={options} />)
   }
