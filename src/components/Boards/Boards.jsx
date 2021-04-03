@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-return-assign */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-console */
@@ -128,7 +129,7 @@ class Boards extends Component {
       const { data, date } = this.state;
       const copiedData = data;
       const yesterday = new Date(date);
-      yesterday.setDate(yesterday.getDate() - 1); 
+      yesterday.setDate(yesterday.getDate() - 1);
       const updatedDate = handleDateExp(yesterday);
       // Grab selected date and copy cards from prev date
       copiedData.lanes.forEach((lane) => {
@@ -285,14 +286,19 @@ class Boards extends Component {
                     }}
                     dropPlaceholderAnimationDuration={200}
                   >
-                    {column.cards[date]?.map((card, cardInd) => (
-                      <Draggable className="card" key={card.id}>
+                    {column.cards[date]?.map((card, cardInd) => {
+                      let description = '';
+                      const key = Object.keys(JSON.parse(card.description)._immutable?.currentContent?.blockMap);
+                      if(key && key?.length){
+                        description = JSON.parse(card.description)._immutable?.currentContent?.blockMap[key[0]]?.text
+                      }
+                      return <Draggable className="card" key={card.id}>
                         <div className="title">
                           <p>{card.title}</p>
                         </div>
                         <hr />
                         <div className="description">
-                          <p>{card.description}</p>
+                          <p>{description}</p>
 
                         </div>
                         <FontAwesomeIcon onClick={() =>
@@ -307,7 +313,7 @@ class Boards extends Component {
                           })
                         } icon={faEdit} />
                       </Draggable>
-                    ))}
+                    })}
                     <Button
                       variant="link"
                       className="header-btn"

@@ -6,10 +6,11 @@ import {
   Modal as BootstrapModal,
   Button,
   InputGroup,
-  FormControl,
   Form,
 } from 'react-bootstrap';
+import { EditorState } from 'draft-js';
 
+import EditorInput from './EditorInput';
 import TagsInput from './TagsInput/TagsInput';
 import { asyncLocalStorage } from './utils';
 
@@ -19,7 +20,7 @@ class Modal extends Component {
     super();
     this.state = {
       title: '',
-      description: '',
+      description: EditorState.createEmpty(),
       tags: [],
     };
   }
@@ -30,10 +31,10 @@ class Modal extends Component {
       description
     } = this.state;
     // I used to match values, The setState will only happen once the value changes.
-    if (nextProps.editTitle !== title || nextProps.editDescription !== description) {
+    if (nextProps.editTitle !== title) {
       this.setState({
         title: nextProps.editTitle,
-        description: nextProps.editDescription,
+        // description: JSON.parse(nextProps.editDescription),
         tags: nextProps.editTags ? nextProps.editTags : [],
       });
     }
@@ -47,12 +48,12 @@ class Modal extends Component {
       tags
     } = this.state;
     const { addcard, laneid, isEdit, updateCardDetails, cardID } = this.props;
-    if (title?.trim() && description?.trim()) {
+    if (title?.trim() && description) {
       // Here I'm checking the edit flag, If it's true it means user want to edit the card details
       if (isEdit) {
-        updateCardDetails({ title, description, laneid, cardID, tags });
+        updateCardDetails({ title, description: JSON.stringify(description), laneid, cardID, tags });
       } else {
-        addcard({ title, description, laneid, tags });
+        addcard({ title, description: JSON.stringify(description), laneid, tags });
       }
     } else {
       alert('Please enter all the details');
@@ -76,6 +77,8 @@ class Modal extends Component {
     callback();
   };
 
+  setDescriptionValue = (e) => this.setState({ description: e });
+
   render() {
     // Here I perform destructuring of objects to access the value using ES6 method
     const {
@@ -88,6 +91,7 @@ class Modal extends Component {
       description,
       tags
     } = this.state;
+
     return (
       <BootstrapModal
         show={show}
@@ -120,7 +124,7 @@ class Modal extends Component {
                 <InputGroup.Prepend>
                   <InputGroup.Text>Description</InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl
+                {/* <FormControl
                   value={description}
                   // Here I perform destructuring of objects to access the value using ES6 method
                   onChange={({ target: { value } }) =>
@@ -128,6 +132,10 @@ class Modal extends Component {
                   }
                   as="textarea"
                   aria-label="description"
+                /> */}
+                <EditorInput
+                  editorState={description}
+                  onChange={this.setDescriptionValue}
                 />
               </InputGroup>
             </Form.Group>
