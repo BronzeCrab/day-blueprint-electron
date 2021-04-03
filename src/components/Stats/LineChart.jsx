@@ -1,5 +1,6 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2';
+import moment from 'moment';
 
 const checkStorageForCards = () => {
   const localStorageData = localStorage.getItem('boards');
@@ -40,10 +41,13 @@ class LineChart extends React.Component {
     data.labels = [];
     data.datasets[0].data = [];
 
-    for (const [key, value] of Object.entries(localStorageData.lanes[2].cards)) {
+    Object.keys(localStorageData.lanes[2].cards).sort(function(a, b) {
+        return moment(a, 'YYYY-MM-DD').toDate() - moment(b, 'YYYY-MM-DD').toDate();
+    }).forEach(function(key) {
       data.labels.push(key);
-      data.datasets[0].data.push(value.length);
-    }
+      data.datasets[0].data.push(localStorageData.lanes[2].cards[key].length);
+    })
+
     return (<Line data={data} options={options} />)
   }
 }

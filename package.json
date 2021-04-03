@@ -258,6 +258,7 @@
     "electron-updater": "^4.3.4",
     "history": "^5.0.0",
     "jquery": "^3.6.0",
+    "moment": "^2.29.1",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
     "react-autosuggest": "^10.1.0",
