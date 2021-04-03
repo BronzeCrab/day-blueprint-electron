@@ -8,7 +8,6 @@ import {
   InputGroup,
   Form,
 } from 'react-bootstrap';
-import { EditorState } from 'draft-js';
 
 import EditorInput from './EditorInput';
 import TagsInput from './TagsInput/TagsInput';
@@ -20,7 +19,7 @@ class Modal extends Component {
     super();
     this.state = {
       title: '',
-      description: EditorState.createEmpty(),
+      description: '',
       tags: [],
     };
   }
@@ -34,7 +33,7 @@ class Modal extends Component {
     if (nextProps.editTitle !== title) {
       this.setState({
         title: nextProps.editTitle,
-        // description: JSON.parse(nextProps.editDescription),
+        description: nextProps.editDescription,
         tags: nextProps.editTags ? nextProps.editTags : [],
       });
     }
@@ -51,12 +50,9 @@ class Modal extends Component {
     if (title?.trim() && description) {
       // Here I'm checking the edit flag, If it's true it means user want to edit the card details
       if (isEdit) {
-        updateCardDetails({ title, description: JSON.stringify(description), laneid, cardID, tags });
+        updateCardDetails({ title, description, laneid, cardID, tags });
       } else {
-        addcard({ title, description: JSON.stringify(description), laneid, tags });
-        this.setState({
-          description: EditorState.createEmpty(),
-        });
+        addcard({ title, description, laneid, tags });
       }
     } else {
       alert('Please enter all the details');

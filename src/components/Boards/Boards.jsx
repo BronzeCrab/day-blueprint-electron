@@ -286,20 +286,14 @@ class Boards extends Component {
                     }}
                     dropPlaceholderAnimationDuration={200}
                   >
-                    {column.cards[date]?.map((card, cardInd) => {
-                      let description = '';
-                      // Extracting object key which is dynamic (Changes everytime)
-                      const key = Object.keys(JSON.parse(card.description)._immutable?.currentContent?.blockMap);
-                      if (key?.length) {
-                        description = JSON.parse(card.description)._immutable?.currentContent?.blockMap[key[0]]?.text
-                      }
-                      return <Draggable className="card" key={card.id}>
+                    {column.cards[date]?.map((card, cardInd) => (
+                      <Draggable className="card" key={card.id}>
                         <div className="title">
                           <p>{card.title}</p>
                         </div>
                         <hr />
                         <div className="description">
-                          <p>{description}</p>
+                          <p>{card.description}</p>
                         </div>
                         <FontAwesomeIcon onClick={() =>
                           this.setState({
@@ -313,7 +307,7 @@ class Boards extends Component {
                           })
                         } icon={faEdit} />
                       </Draggable>
-                    })}
+                    ))}
                     <Button
                       variant="link"
                       className="header-btn"
