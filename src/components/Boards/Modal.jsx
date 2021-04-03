@@ -124,15 +124,6 @@ class Modal extends Component {
                 <InputGroup.Prepend>
                   <InputGroup.Text>Description</InputGroup.Text>
                 </InputGroup.Prepend>
-                {/* <FormControl
-                  value={description}
-                  // Here I perform destructuring of objects to access the value using ES6 method
-                  onChange={({ target: { value } }) =>
-                    this.setState({ description: value })
-                  }
-                  as="textarea"
-                  aria-label="description"
-                /> */}
                 <EditorInput
                   editorState={description}
                   onChange={this.setDescriptionValue}
