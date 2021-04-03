@@ -54,6 +54,9 @@ class Modal extends Component {
         updateCardDetails({ title, description: JSON.stringify(description), laneid, cardID, tags });
       } else {
         addcard({ title, description: JSON.stringify(description), laneid, tags });
+        this.setState({
+          description: EditorState.createEmpty(),
+        });
       }
     } else {
       alert('Please enter all the details');
