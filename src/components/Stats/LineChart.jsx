@@ -1,16 +1,20 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2';
-import { asyncLocalStorage } from '../Boards/utils';
+
+const checkStorageForCards = () => {
+  const localStorageData = localStorage.getItem('boards');
+  return localStorageData;
+};
 
 const data = {
-  labels: ['1', '2', '3', '4', '5', '6'],
+  labels: [],
   datasets: [
     {
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
+      label: 'Number of done cards per day',
+      data: [],
       fill: false,
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgba(255, 99, 132, 0.2)',
+      backgroundColor: 'rgb(60, 179, 113)',
+      borderColor: 'rgba(123, 239, 178, 1)',
     },
   ],
 }
@@ -27,13 +31,22 @@ const options = {
   },
 }
 
-const LineChart = () => (
-  <>
-    <div className='header'>
-      <h1 className='title'>Line Chart</h1>
-    </div>
-    <Line data={data} options={options} />
-  </>
-)
+// eslint-disable-next-line react/prefer-stateless-function
+class LineChart extends React.Component {
+
+  render() {
+    const localStorageData = JSON.parse(checkStorageForCards());
+
+    data.labels = [];
+    data.datasets[0].data = [];
+
+    for (const [key, value] of Object.entries(localStorageData.lanes[2].cards)) {
+      data.labels.push(key);
+      data.datasets[0].data.push(value.length);
+    }
+    return (<Line data={data} options={options} />)
+  }
+}
 
 export default LineChart
+
