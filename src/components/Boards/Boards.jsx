@@ -105,19 +105,17 @@ class Boards extends Component {
     const { data, date } = this.state;
 
     if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-      const scene = { ...data };
+      const scene = JSON.parse(JSON.stringify(data));
       const column = scene.lanes.filter((p) => p.id === columnId)[0];
       const columnIndex = scene.lanes.indexOf(column);
 
-      const newColumn = { ...column };
-      newColumn.cards[date] = applyDrag(newColumn.cards[date], dropResult);
+      const newColumn = JSON.parse(JSON.stringify(column));
+      newColumn.cards[date] = applyDrag(newColumn.cards[date] || [], dropResult);
       scene.lanes.splice(columnIndex, 1, newColumn);
-
 
       this.setState({
         data: scene,
       });
-
 
       // After card swapping, Saving updated cards data into the localStorage.
       await asyncLocalStorage.setItem('boards', JSON.stringify(scene));
