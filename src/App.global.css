@@ -256,3 +256,7 @@ a:hover {
 .react-autosuggest__suggestion--focused {
   background-color: #ddd;
 }
+
+.fa-trash-icon {
+  margin-left: 0.3rem;
+}
