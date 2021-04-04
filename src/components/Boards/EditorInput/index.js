@@ -1,13 +1,46 @@
 import React from 'react';
-class RichEditor extends React.Component {
+import ReactQuill from 'react-quill';
 
-  render() {
-    const { editorState } = this.props;
-
+class Editor extends React.Component {
+  
+  render () {
+    const { editorState, onChange} = this.props;
     return (
-      null
-    );
+      <div>
+        <ReactQuill 
+          theme="snow"
+          onChange={onChange}
+          value={editorState}
+          modules={Editor.modules}
+          formats={Editor.formats}
+          placeholder="Description"
+        />
+       </div>
+     )
   }
 }
 
-export default RichEditor;
+Editor.modules = {
+  toolbar: [
+    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+    [{size: []}],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, 
+     {'indent': '-1'}, {'indent': '+1'}],
+    ['link', 'image', 'video'],
+    ['clean']
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  }
+}
+
+Editor.formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'video'
+];
+
+export default Editor;

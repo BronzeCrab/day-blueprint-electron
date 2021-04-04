@@ -16,6 +16,7 @@ import {
   getTodayDate,
   handleDateExp,
   asyncLocalStorage,
+  extractTextContent,
 } from './utils';
 
 const mockedData = require('./data.json');
@@ -76,8 +77,7 @@ class Boards extends Component {
   });
 
   addCard = async ({ title, description, laneid, tags }) => {
-    const { date } = this.state;
-    const data = JSON.parse(await asyncLocalStorage.getItem('boards'));
+    const { date, data } = this.state;
     const copiedData = JSON.parse(JSON.stringify(data));
     if (!copiedData.lanes[laneid].cards[date]) {
       copiedData.lanes[laneid].cards[date] = [];
@@ -293,7 +293,7 @@ class Boards extends Component {
                         </div>
                         <hr />
                         <div className="description">
-                          <p>{card.description}</p>
+                          <p>{extractTextContent(card.description)}</p>
                         </div>
                         <FontAwesomeIcon onClick={() =>
                           this.setState({

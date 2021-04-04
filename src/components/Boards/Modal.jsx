@@ -120,9 +120,6 @@ class Modal extends Component {
             </Form.Group>
             <Form.Group controlId="description">
               <InputGroup className="mb-3">
-                <InputGroup.Prepend>
-                  <InputGroup.Text>Description</InputGroup.Text>
-                </InputGroup.Prepend>
                 <EditorInput
                   editorState={description}
                   onChange={this.setDescriptionValue}
