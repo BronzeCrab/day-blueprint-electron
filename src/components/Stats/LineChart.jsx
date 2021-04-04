@@ -47,36 +47,36 @@ class LineChart extends React.Component {
 
     data.labels = [];
     data.datasets[0].data = [];
-    let totalNumOfCardsForDate = 0;
+    const allCards = {};
+    for (let i = 0; i < 3; i+=1) {
+      // eslint-disable-next-line @typescript-eslint/no-loop-func
+      Object.keys(localStorageData.lanes[i].cards).forEach(function(key) {
+        const cardObj = localStorageData.lanes[i].cards[key]
+        cardObj.laneId = i;
+        if (key in allCards) {
+          allCards[key].push(cardObj)
+        }
+        else {
+          allCards[key] = [cardObj];
+        }
+      })
+    }
 
-    Object.keys(localStorageData.lanes[0].cards).sort(function(a, b) {
+    Object.keys(allCards).sort(function(a, b) {
         return moment(a, 'YYYY-MM-DD').toDate() - moment(b, 'YYYY-MM-DD').toDate();
     }).forEach(function(key) {
       data.labels.push(key);
-      data.datasets[1].data.push(localStorageData.lanes[0].cards[key].length);
-      totalNumOfCardsForDate += localStorageData.lanes[0].cards[key].length;
-    })
-
-    Object.keys(localStorageData.lanes[1].cards).sort(function(a, b) {
-        return moment(a, 'YYYY-MM-DD').toDate() - moment(b, 'YYYY-MM-DD').toDate();
-    }).forEach(function(key) {
-      if (data.labels.indexOf(key) === -1){
-        data.labels.push(key);
-      }
-      data.datasets[1].data.push(localStorageData.lanes[1].cards[key].length);
-      totalNumOfCardsForDate += localStorageData.lanes[1].cards[key].length;
-    })
-
-    Object.keys(localStorageData.lanes[2].cards).sort(function(a, b) {
-        return moment(a, 'YYYY-MM-DD').toDate() - moment(b, 'YYYY-MM-DD').toDate();
-    }).forEach(function(key) {
-      if (data.labels.indexOf(key) === -1){
-        data.labels.push(key);
-      }
-      data.datasets[1].data.push(localStorageData.lanes[2].cards[key].length);
-      totalNumOfCardsForDate += localStorageData.lanes[2].cards[key].length;
-      data.datasets[0].data.push(totalNumOfCardsForDate)
-    })
+      let numOfDone = 0;
+      let totalPerDay = 0;
+      allCards[key].forEach(function(cardObj) {
+        if (cardObj.laneId === 2) {
+          numOfDone += 1;
+        }
+        totalPerDay += 1;
+      });
+      data.datasets[0].data.push(numOfDone);
+      data.datasets[1].data.push(totalPerDay);
+    });
 
     return (<Line data={data} options={options} />)
   }
