@@ -80,7 +80,7 @@ class Boards extends Component {
     const { date, data } = this.state;
     const cards = JSON.parse(await asyncLocalStorage.getItem('boards'));
     const copiedData = JSON.parse(JSON.stringify(data));
-    
+
     copiedData.tags = cards.tags;
     if (!copiedData.lanes[laneid].cards[date]) {
       copiedData.lanes[laneid].cards[date] = [];
@@ -325,8 +325,8 @@ class Boards extends Component {
                         } icon={faEdit} />
                         <FontAwesomeIcon onClick={
                           () => this.delCard(ind, cardInd)}
-                         icon={faTrash} 
-                         className="fa-trash-icon"/>
+                          icon={faTrash}
+                          className="fa-trash-icon" />
                       </Draggable>
                     ))}
                     <Button

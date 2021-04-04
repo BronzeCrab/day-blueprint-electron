@@ -2,12 +2,12 @@ import React from 'react';
 import ReactQuill from 'react-quill';
 
 class Editor extends React.Component {
-  
-  render () {
-    const { editorState, onChange} = this.props;
+
+  render() {
+    const { editorState, onChange } = this.props;
     return (
       <div>
-        <ReactQuill 
+        <ReactQuill
           theme="snow"
           onChange={onChange}
           value={editorState}
@@ -15,18 +15,18 @@ class Editor extends React.Component {
           formats={Editor.formats}
           placeholder="Description"
         />
-       </div>
-     )
+      </div>
+    )
   }
 }
 
 Editor.modules = {
   toolbar: [
-    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-    [{size: []}],
+    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+    [{ size: [] }],
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, 
-     {'indent': '-1'}, {'indent': '+1'}],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' },
+    { 'indent': '-1' }, { 'indent': '+1' }],
     ['link', 'image', 'video'],
     ['clean']
   ],
