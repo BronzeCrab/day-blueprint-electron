@@ -47,23 +47,35 @@ class LineChart extends React.Component {
 
     data.labels = [];
     data.datasets[0].data = [];
+    let totalNumOfCardsForDate = 0;
+
+    Object.keys(localStorageData.lanes[0].cards).sort(function(a, b) {
+        return moment(a, 'YYYY-MM-DD').toDate() - moment(b, 'YYYY-MM-DD').toDate();
+    }).forEach(function(key) {
+      data.labels.push(key);
+      data.datasets[1].data.push(localStorageData.lanes[0].cards[key].length);
+      totalNumOfCardsForDate += localStorageData.lanes[0].cards[key].length;
+    })
+
+    Object.keys(localStorageData.lanes[1].cards).sort(function(a, b) {
+        return moment(a, 'YYYY-MM-DD').toDate() - moment(b, 'YYYY-MM-DD').toDate();
+    }).forEach(function(key) {
+      if (data.labels.indexOf(key) === -1){
+        data.labels.push(key);
+      }
+      data.datasets[1].data.push(localStorageData.lanes[1].cards[key].length);
+      totalNumOfCardsForDate += localStorageData.lanes[1].cards[key].length;
+    })
 
     Object.keys(localStorageData.lanes[2].cards).sort(function(a, b) {
         return moment(a, 'YYYY-MM-DD').toDate() - moment(b, 'YYYY-MM-DD').toDate();
     }).forEach(function(key) {
-      data.labels.push(key);
-      data.datasets[0].data.push(localStorageData.lanes[2].cards[key].length);
-      console.log('begin11')
-      console.log(key)
-      let totalNumOfCardsForDate = 0;
-      for (let i = 0; i < 3; i+=1) {
-        console.log(localStorageData.lanes[i].cards[key].length);
-        totalNumOfCardsForDate += localStorageData.lanes[i].cards[key].length;
+      if (data.labels.indexOf(key) === -1){
+        data.labels.push(key);
       }
-      console.log('end1')
-      console.log(totalNumOfCardsForDate)
-      console.log('end2')
-      data.datasets[1].data.push(totalNumOfCardsForDate);
+      data.datasets[1].data.push(localStorageData.lanes[2].cards[key].length);
+      totalNumOfCardsForDate += localStorageData.lanes[2].cards[key].length;
+      data.datasets[0].data.push(totalNumOfCardsForDate)
     })
 
     return (<Line data={data} options={options} />)
