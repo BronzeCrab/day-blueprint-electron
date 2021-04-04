@@ -248,6 +248,10 @@ a:hover {
   padding-top: 10px;
 }
 
+.fa-trash-icon {
+  margin-left: 0.3rem;
+}
+
 .react-autosuggest__suggestion {
   cursor: pointer;
   padding: 10px 0;
