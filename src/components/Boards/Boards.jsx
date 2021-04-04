@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { Container, Draggable } from 'react-smooth-dnd';
 import { Container as BootstapContainer, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from './Modal';
 import Header from '../Header';
@@ -75,7 +75,8 @@ class Boards extends Component {
   });
 
   addCard = async ({ title, description, laneid, tags }) => {
-    const { data, date } = this.state;
+    const { date } = this.state;
+    const data = JSON.parse(await asyncLocalStorage.getItem('boards'));
     const copiedData = JSON.parse(JSON.stringify(data));
     if (!copiedData.lanes[laneid].cards[date]) {
       copiedData.lanes[laneid].cards[date] = [];
@@ -237,6 +238,22 @@ class Boards extends Component {
     await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
   }
 
+  delCard(laneId, cardId) {
+    if (window.confirm('Are you sure to delete this card?')) {
+      const { data, date } = this.state;
+
+      // Here we are using deep cloning method to remove the reference from the data object.
+      const copiedData = JSON.parse(JSON.stringify(data));
+      copiedData.lanes[laneId].cards[date].splice(cardId, 1)
+
+      this.setState({
+        data: copiedData
+      });
+
+      localStorage.setItem('boards', JSON.stringify(copiedData));
+    }
+  }
+
   render() {
     const {
       date,
@@ -305,6 +322,10 @@ class Boards extends Component {
                             editTags: card.tags,
                           })
                         } icon={faEdit} />
+                        <FontAwesomeIcon onClick={
+                          () => this.delCard(ind, cardInd)}
+                         icon={faTrash} 
+                         className="fa-trash-icon"/>
                       </Draggable>
                     ))}
                     <Button
