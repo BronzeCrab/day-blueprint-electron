@@ -43,9 +43,7 @@ export const asyncLocalStorage = {
   },
 };
 
-export const capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-};
+export const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 
 export const extractTextContent = (value) => {
   let div = document.createElement('div')

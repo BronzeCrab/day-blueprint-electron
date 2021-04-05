@@ -4,7 +4,11 @@ import ReactQuill from 'react-quill';
 class Editor extends React.Component {
 
   render() {
-    const { editorState, onChange } = this.props;
+    const { 
+      editorState, 
+      onChange 
+    } = this.props;
+
     return (
       <div>
         <ReactQuill

@@ -192,6 +192,7 @@ class Boards extends Component {
       lane.cards[updatedDate] = lane.cards[updatedDate] ? lane.cards[updatedDate] : [];
     });
 
+    
     this.setState({
       date: updatedDate,
       data: scene,
@@ -253,6 +254,7 @@ class Boards extends Component {
       });
 
       await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+
     }
   }
 
