@@ -240,7 +240,7 @@ class Boards extends Component {
     await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
   }
 
-  delCard(laneId, cardId) {
+  delCard = async (laneId, cardId) => {
     if (window.confirm('Are you sure to delete this card?')) {
       const { data, date } = this.state;
 
@@ -252,7 +252,7 @@ class Boards extends Component {
         data: copiedData
       });
 
-      localStorage.setItem('boards', JSON.stringify(copiedData));
+      await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
     }
   }
 
