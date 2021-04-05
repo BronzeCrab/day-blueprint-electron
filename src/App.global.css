@@ -262,13 +262,14 @@ a:hover {
 }
 
 .chartjs-render-monitor {
-  width: 800px;
+  width: 850px;
   margin-bottom: 350px;
 }
 
 .fa-trash-icon {
   margin-left: 0.3rem;
 }
+
 .ql-container {
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;

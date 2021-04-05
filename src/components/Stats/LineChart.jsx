@@ -51,13 +51,13 @@ class LineChart extends React.Component {
     for (let i = 0; i < 3; i+=1) {
       // eslint-disable-next-line @typescript-eslint/no-loop-func
       Object.keys(localStorageData.lanes[i].cards).forEach(function(key) {
-        const cardObj = localStorageData.lanes[i].cards[key]
-        cardObj.laneId = i;
+        const cardArray = localStorageData.lanes[i].cards[key]
+        cardArray.laneId = i;
         if (key in allCards) {
-          allCards[key].push(cardObj)
+          allCards[key].push(cardArray)
         }
         else {
-          allCards[key] = [cardObj];
+          allCards[key] = [cardArray];
         }
       })
     }
@@ -68,11 +68,13 @@ class LineChart extends React.Component {
       data.labels.push(key);
       let numOfDone = 0;
       let totalPerDay = 0;
-      allCards[key].forEach(function(cardObj) {
-        if (cardObj.laneId === 2) {
-          numOfDone += 1;
-        }
-        totalPerDay += 1;
+      allCards[key].forEach(function(cardArray) {
+        cardArray.forEach(function(cardObj) {
+          if (cardArray.laneId === 2) {
+            numOfDone += 1;
+          }
+          totalPerDay += 1;
+        });
       });
       data.datasets[0].data.push(numOfDone);
       data.datasets[1].data.push(totalPerDay);
