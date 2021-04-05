@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-return-assign */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-console */
@@ -15,6 +16,7 @@ import {
   getTodayDate,
   handleDateExp,
   asyncLocalStorage,
+  extractTextContent,
 } from './utils';
 
 const mockedData = require('./data.json');
@@ -75,9 +77,11 @@ class Boards extends Component {
   });
 
   addCard = async ({ title, description, laneid, tags }) => {
-    const { date } = this.state;
-    const data = JSON.parse(await asyncLocalStorage.getItem('boards'));
+    const { date, data } = this.state;
+    const cards = JSON.parse(await asyncLocalStorage.getItem('boards'));
     const copiedData = JSON.parse(JSON.stringify(data));
+
+    copiedData.tags = cards.tags;
     if (!copiedData.lanes[laneid].cards[date]) {
       copiedData.lanes[laneid].cards[date] = [];
     }
@@ -104,19 +108,17 @@ class Boards extends Component {
     const { data, date } = this.state;
 
     if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-      const scene = { ...data };
+      const scene = JSON.parse(JSON.stringify(data));
       const column = scene.lanes.filter((p) => p.id === columnId)[0];
       const columnIndex = scene.lanes.indexOf(column);
 
-      const newColumn = { ...column };
-      newColumn.cards[date] = applyDrag(newColumn.cards[date], dropResult);
+      const newColumn = JSON.parse(JSON.stringify(column));
+      newColumn.cards[date] = applyDrag(newColumn.cards[date] || [], dropResult);
       scene.lanes.splice(columnIndex, 1, newColumn);
-
 
       this.setState({
         data: scene,
       });
-
 
       // After card swapping, Saving updated cards data into the localStorage.
       await asyncLocalStorage.setItem('boards', JSON.stringify(scene));
@@ -128,7 +130,7 @@ class Boards extends Component {
       const { data, date } = this.state;
       const copiedData = data;
       const yesterday = new Date(date);
-      yesterday.setDate(yesterday.getDate() - 1); 
+      yesterday.setDate(yesterday.getDate() - 1);
       const updatedDate = handleDateExp(yesterday);
       // Grab selected date and copy cards from prev date
       copiedData.lanes.forEach((lane) => {
@@ -190,6 +192,7 @@ class Boards extends Component {
       lane.cards[updatedDate] = lane.cards[updatedDate] ? lane.cards[updatedDate] : [];
     });
 
+    
     this.setState({
       date: updatedDate,
       data: scene,
@@ -238,7 +241,7 @@ class Boards extends Component {
     await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
   }
 
-  delCard(laneId, cardId) {
+  delCard = async (laneId, cardId) => {
     if (window.confirm('Are you sure to delete this card?')) {
       const { data, date } = this.state;
 
@@ -250,7 +253,8 @@ class Boards extends Component {
         data: copiedData
       });
 
-      localStorage.setItem('boards', JSON.stringify(copiedData));
+      await asyncLocalStorage.setItem('boards', JSON.stringify(copiedData));
+
     }
   }
 
@@ -308,8 +312,7 @@ class Boards extends Component {
                         </div>
                         <hr />
                         <div className="description">
-                          <p>{card.description}</p>
-
+                          <p>{extractTextContent(card.description)}</p>
                         </div>
                         <FontAwesomeIcon onClick={() =>
                           this.setState({
@@ -324,8 +327,8 @@ class Boards extends Component {
                         } icon={faEdit} />
                         <FontAwesomeIcon onClick={
                           () => this.delCard(ind, cardInd)}
-                         icon={faTrash} 
-                         className="fa-trash-icon"/>
+                          icon={faTrash}
+                          className="fa-trash-icon" />
                       </Draggable>
                     ))}
                     <Button
