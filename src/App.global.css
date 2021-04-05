@@ -262,7 +262,7 @@ a:hover {
 }
 
 .chartjs-render-monitor {
-  width: 850px;
+  width: 850px !important;
   margin-bottom: 350px;
 }
 
