@@ -2,7 +2,7 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2';
 
-import { asyncLocalStorage } from '../Boards/utils';
+import { asyncLocalStorage } from '../../Boards/utils';
 import {
   mockedData,
   options,

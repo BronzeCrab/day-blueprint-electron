@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from '../Navbar';
-import LineChart from './LineChart';
-import VerticalBar from './VerticalBar';
+import LineChart from './LineChart/LineChart';
+import VerticalBar from './VerticalBar/VerticalBar';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Stats extends Component {
