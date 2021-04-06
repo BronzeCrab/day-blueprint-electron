@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TagsInput from 'react-tagsinput';
 import Autosuggest from 'react-autosuggest';
-import { asyncLocalStorage, capitalizeFirstLetter } from '../utils';
+import { asyncLocalStorage } from '../utils';
 
 
 class CustomTagsInput extends React.Component {
@@ -23,7 +23,7 @@ class CustomTagsInput extends React.Component {
             const asyncData = JSON.parse(await asyncLocalStorage.getItem('boards'));
 
             if (asyncData?.tags) {
-                const formated = asyncData?.tags.map(tag => ({ abbr: capitalizeFirstLetter(tag), name: capitalizeFirstLetter(tag) }));
+                const formated = asyncData?.tags.map(tag => ({ abbr: tag, name: tag }));
                 this.setState({ suggestionList: formated });
             }
         } catch (err) {

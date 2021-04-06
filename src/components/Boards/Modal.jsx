@@ -66,7 +66,7 @@ class Modal extends Component {
     // Remove repeated values from the array
     updatedTags = [...new Set(updatedTags)];
 
-    copiedData.tags = updatedTags;
+    copiedData.tags = updatedTags.map(tag => tag.toLowerCase());
     this.setState({ tags });
 
     // Set updated tags to the localStorage
