@@ -263,7 +263,7 @@ a:hover {
 
 .chartjs-render-monitor {
   width: 850px !important;
-  margin-bottom: 350px;
+  margin-bottom: 150px;
 }
 
 .fa-trash-icon {
@@ -301,4 +301,9 @@ a:hover {
 
 .ql-snow .ql-picker.ql-font {
   margin-top: 10px;
+}
+
+.stats-charts-wrapper {
+  overflow: scroll;
+  height: 850px;
 }
