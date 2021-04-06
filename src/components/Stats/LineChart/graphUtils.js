@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const formate = 'YYYY-MM-DD'; 
+const dateFormat = 'YYYY-MM-DD'; 
 
 export const mockedData = {
     labels: [],
@@ -55,7 +55,7 @@ export const getFormatedData = (storageCards, copiedData) => {
             });
     }
     Object.keys(allCards)
-        .sort((a, b) => moment(a, formate).toDate() - moment(b, formate).toDate())
+        .sort((a, b) => moment(a, dateFormat).toDate() - moment(b, dateFormat).toDate())
         .forEach((key) => {
             copiedData.labels.push(key);
             let numOfDone = 0;
