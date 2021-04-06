@@ -62,20 +62,11 @@ class VerticalBar extends React.Component {
         cardArray.forEach(function(cardObj) {
           cardObj.tags.forEach(function(tag) {
             if (!(tag in allTags)) {
-              allTags[tag] = {"count": 0}
+              allTags[tag] = {"count": 1}
             }
-          })
-        })
-      })
-    }
-
-    for (let i = 0; i < 3; i+=1) {
-      // eslint-disable-next-line @typescript-eslint/no-loop-func
-      Object.keys(localStorageData.lanes[i].cards).forEach(function(key) {
-        const cardArray = localStorageData.lanes[i].cards[key]
-        cardArray.forEach(function(cardObj) {
-          cardObj.tags.forEach(function(tag) {
-            allTags[tag].count += 1;
+            else {
+              allTags[tag].count += 1;
+            }
           })
         })
       })
