@@ -1,88 +1,47 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Line } from 'react-chartjs-2';
-import moment from 'moment';
 
-const checkStorageForCards = () => {
-  const localStorageData = localStorage.getItem('boards');
-  return localStorageData;
-};
+import { asyncLocalStorage } from '../Boards/utils';
+import {
+  mockedData,
+  options,
+  getFormatedData,
+} from './graphUtils';
 
-const data = {
-  labels: [],
-  datasets: [
-    {
-      label: 'Number of done cards per day',
-      data: [],
-      fill: false,
-      backgroundColor: 'rgb(60, 179, 113)',
-      borderColor: 'rgba(123, 239, 178, 1)',
-    },
-    {
-      label: 'Total number of cards per day',
-      data: [],
-      fill: false,
-      backgroundColor: '#003366',
-      borderColor: '#003366',
-    }
-  ],
-}
-
-const options = {
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          beginAtZero: true,
-        },
-      },
-    ],
-  },
-}
-
-// eslint-disable-next-line react/prefer-stateless-function
 class LineChart extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      data: null,
+    };
+  }
+
+  componentDidMount() {
+    this.fetchDataFromStorage();
+  };
+
+  fetchDataFromStorage = async () => {
+    try {
+      const storageCards = JSON.parse(await asyncLocalStorage.getItem('boards'));
+      const graphData = JSON.parse(JSON.stringify(mockedData));
+      const formatedData = getFormatedData(storageCards, graphData);
+
+      this.setState({ data: formatedData });
+      
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
 
   render() {
-    const localStorageData = JSON.parse(checkStorageForCards());
+    const { data } = this.state;
 
-    data.labels = [];
-    data.datasets[0].data = [];
-    const allCards = {};
-    for (let i = 0; i < 3; i+=1) {
-      // eslint-disable-next-line @typescript-eslint/no-loop-func
-      Object.keys(localStorageData.lanes[i].cards).forEach(function(key) {
-        const cardArray = localStorageData.lanes[i].cards[key]
-        cardArray.forEach(function(cardObj) {
-          cardObj.laneId = i;
-          if (key in allCards) {
-            allCards[key].push(cardObj)
-          }
-          else {
-            allCards[key] = [cardObj];
-          }
-        })
-      })
-    }
+    if (!data)
+      return null;
 
-    console.log('reload1');
-
-    Object.keys(allCards).sort(function(a, b) {
-        return moment(a, 'YYYY-MM-DD').toDate() - moment(b, 'YYYY-MM-DD').toDate();
-    }).forEach(function(key) {
-      data.labels.push(key);
-      let numOfDone = 0;
-      let totalPerDay = 0;
-      allCards[key].forEach(function(cardObj) {
-        if (cardObj.laneId === 2) {
-          numOfDone += 1;
-        }
-        totalPerDay += 1;
-      });
-      data.datasets[0].data.push(numOfDone);
-      data.datasets[1].data.push(totalPerDay);
-    });
-
-    return (<Line data={data} options={options} />)
+    return (<Line data={data} options={options} />);
   }
 }
 
