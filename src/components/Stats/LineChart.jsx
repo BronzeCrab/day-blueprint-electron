@@ -64,7 +64,7 @@ class LineChart extends React.Component {
       })
     }
 
-    console.log('reload');
+    console.log('reload1');
 
     Object.keys(allCards).sort(function(a, b) {
         return moment(a, 'YYYY-MM-DD').toDate() - moment(b, 'YYYY-MM-DD').toDate();
