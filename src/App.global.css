@@ -261,6 +261,15 @@ a:hover {
   background-color: #ddd;
 }
 
+.chartjs-render-monitor {
+  width: 850px !important;
+  margin-bottom: 150px;
+}
+
+.fa-trash-icon {
+  margin-left: 0.3rem;
+}
+
 .ql-container {
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
@@ -292,4 +301,9 @@ a:hover {
 
 .ql-snow .ql-picker.ql-font {
   margin-top: 10px;
+}
+
+.stats-charts-wrapper {
+  overflow: scroll;
+  height: 850px;
 }
