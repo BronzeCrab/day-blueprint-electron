@@ -128,15 +128,26 @@ class Boards extends Component {
 
   copyCardsFromPrevDate = async () => {
     if (window.confirm('Are you sure to copy all cards from previous date?')) {
-      const { data, date } = this.state;
+      let { data, date } = this.state;
       const copiedData = data;
-      const yesterday = new Date(date);
-      yesterday.setDate(yesterday.getDate() - 1);
-      const updatedDate = handleDateExp(yesterday);
-      // Grab selected date and copy cards from prev date
-      copiedData.lanes.forEach((lane) => {
-        lane.cards[date] = lane.cards[updatedDate];
-      });
+      date = new Date(date);
+      let yesterday;
+      for (let i = 1; i < 366; i += 1) {
+        yesterday = date - 1000 * 60 * 60 * 24 * i;
+        yesterday = new Date(yesterday);
+        yesterday = handleDateExp(yesterday);
+        const updatedDate = handleDateExp(date);
+        let ifBreak = false;
+        copiedData.lanes.forEach((lane) => {
+          if (lane.cards[yesterday] && lane.cards[yesterday].length > 0) {
+            lane.cards[updatedDate] = lane.cards[yesterday];
+            ifBreak = true;
+          };
+        });
+        if (ifBreak) {
+          break;
+        }
+      }
 
       this.setState({ data: copiedData });
       // Delete cards handling, Saving updated card to the localStorage.
