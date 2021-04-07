@@ -10,11 +10,10 @@ body {
   overflow-y: hidden;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .nav {
-  margin-top: 15rem;
+  margin-top: 2rem;
 }
 
 .nav-link:hover {
@@ -263,7 +262,7 @@ a:hover {
 
 .chartjs-render-monitor {
   width: 850px !important;
-  margin-bottom: 150px;
+  margin-bottom: 50px;
 }
 
 .fa-trash-icon {
@@ -305,5 +304,5 @@ a:hover {
 
 .stats-charts-wrapper {
   overflow: scroll;
-  height: 850px;
+  height: 100vh;
 }
