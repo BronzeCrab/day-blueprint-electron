@@ -132,12 +132,12 @@ class Boards extends Component {
       const copiedData = data;
       date = new Date(date);
       let yesterday;
+      let ifBreak = false;
       for (let i = 1; i < 366; i += 1) {
         yesterday = date - 1000 * 60 * 60 * 24 * i;
         yesterday = new Date(yesterday);
         yesterday = handleDateExp(yesterday);
         const updatedDate = handleDateExp(date);
-        let ifBreak = false;
         copiedData.lanes.forEach((lane) => {
           if (lane.cards[yesterday] && lane.cards[yesterday].length > 0) {
             lane.cards[updatedDate] = lane.cards[yesterday];
