@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-loop-func */
 /* eslint-disable no-alert */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-return-assign */
@@ -20,7 +21,29 @@ import {
   extractTextContent,
 } from './utils';
 
-const mockedData = require('./data.json');
+const mockedData = {
+  "lanes": [
+    {
+      "id": 1,
+      "name": "to do",
+      "board_id": 1,
+      "cards": {} 
+    },
+    {
+      "id": 2,
+      "name": "doing",
+      "board_id": 2,
+      "cards": {}
+    },
+    {
+      "id": 3,
+      "name": "done",
+      "board_id": 3,
+      "cards": {}
+    }
+  ],
+  "tags": []
+};
 
 const currentDate = getTodayDate();
 
