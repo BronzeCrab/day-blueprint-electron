@@ -291,6 +291,7 @@ a:hover {
 
 .ql-editor {
   min-height: 18em;
+  font-size: medium;
 }
 
 .themeSwitcher {
