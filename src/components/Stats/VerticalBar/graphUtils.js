@@ -27,7 +27,7 @@ export const options = {
     },
 }
 
-function randomRgba() {
+export function randomRgba() {
     const o = Math.round;
     const r = Math.random;
     const s = 255;
