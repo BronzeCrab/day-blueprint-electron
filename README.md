@@ -20,4 +20,4 @@ How to run for development:
 How to run for using:
  - windows - just run exe
  - mac os - just run dmg
- - linux - just run AppImage
+ - linux - just make AppImage file executable and run it
