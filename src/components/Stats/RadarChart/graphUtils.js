@@ -1,15 +1,9 @@
 import { randomRgba } from '../VerticalBar/graphUtils';
 
 export const mockedData = {
-  labels: ['Thing 1', 'Thing 2', 'Thing 3', 'Thing 4', 'Thing 5', 'Thing 6'],
+  labels: [],
   datasets: [
-    {
-      label: '# of Votes',
-      data: [2, 9, 3, 5, 2, 3],
-      backgroundColor:'',
-      borderColor: '',
-      borderWidth: 1,
-    },
+
   ],
 }
 
@@ -21,8 +15,30 @@ export const options = {
 
 export const getFormatedData = (storageCards, copiedData) => {
 
+    for (let i = 0; i < 3; i+=1) {
+    // eslint-disable-next-line @typescript-eslint/no-loop-func
+    Object.keys(storageCards.lanes[i].cards).forEach(function(key) {
+      const cardArray = storageCards.lanes[i].cards[key]
+      cardArray.forEach(function(cardObj) {
+
+      })
+    })
+  }
+
+  const obj = {
+    label: 'month',
+    data: [],
+    backgroundColor:'',
+    borderColor: '',
+    borderWidth: 1,
+  }
+
+  copiedData.labels = ['tag1', 'tag2', 'tag3']
+  obj.data = [1, 2, 3]
   const color = randomRgba();
-  copiedData.datasets[0].backgroundColor = color + 0.2 + ')';
-  copiedData.datasets[0].borderColor = color + 1 + ')';
+  obj.backgroundColor = color + 0.2 + ')';
+  obj.borderColor = color + 1 + ')';
+
+  copiedData.datasets.push(obj)
   return copiedData;
 };

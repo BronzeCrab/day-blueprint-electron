@@ -44,14 +44,24 @@ export const getFormatedData = (storageCards, copiedData) => {
       Object.keys(storageCards.lanes[i].cards).forEach(function(key) {
         const cardArray = storageCards.lanes[i].cards[key]
         cardArray.forEach(function(cardObj) {
-          cardObj.tags.forEach(function(tag) {
-            if (!(tag in allTags)) {
-              allTags[tag] = {"count": 1}
+          if (cardObj.tags.length === 0) {
+            if (!('no tag (no category)' in allTags)) {
+              allTags['no tag (no category)'] = {"count": 1}
             }
             else {
-              allTags[tag].count += 1;
-            }
-          })
+              allTags['no tag (no category)'].count += 1;
+            }            
+          }
+          else {
+            cardObj.tags.forEach(function(tag) {
+              if (!(tag in allTags)) {
+                allTags[tag] = {"count": 1}
+              }
+              else {
+                allTags[tag].count += 1;
+              }
+            })
+          }
         })
       })
     }
