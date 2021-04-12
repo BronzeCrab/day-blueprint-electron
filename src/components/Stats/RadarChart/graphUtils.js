@@ -1,8 +1,6 @@
 import moment from 'moment';
 import { randomRgba } from '../VerticalBar/graphUtils';
 
-const dateFormat = 'YYYY-MM-DD'; 
-
 export const mockedData = {
   labels: [],
   datasets: [
@@ -17,72 +15,50 @@ export const options = {
 }
 
 export const getFormatedData = (storageCards, copiedData) => {
-    const allCards = {};
-    const allTags = {};
-    for (let i = 0; i < 3; i+=1) {
-    // eslint-disable-next-line @typescript-eslint/no-loop-func
-    Object.keys(storageCards.lanes[i].cards).forEach(function(key) {
+  const allTagsByMonth = {};
+  for (let i = 0; i < 3; i+=1) {
+    Object.keys(storageCards.lanes[i].cards).forEach((key) => {
+      const newDate = new Date(key);
+      const label = newDate.toISOString().slice(0, 7);
+      if (!(label in allTagsByMonth)) {
+        allTagsByMonth[label] = {}
+      }
       const cardArray = storageCards.lanes[i].cards[key]
       cardArray.forEach((cardObj) => {
-        cardObj.laneId = i;
-        if (key in allCards) {
-          allCards[key].push(cardObj);
-        }
-        else {
-          allCards[key] = [cardObj];
-        }
         cardObj.tags.forEach(function(tag) {
-          if (tag in allTags[key]) {
-            console.log('here1');
-            allTags[key][tag] += 1;
+          if (tag in allTagsByMonth[label]) {
+            allTagsByMonth[label][tag] += 1;
           }
           else {
-            console.log('here2');
-            allTags[key][tag] = 1;
+            allTagsByMonth[label][tag] = 1;
           };
         });
       });
     });
   }
-  console.log(allTags)
 
-  let currMonth;
-  let obj;
-
-  // Object.keys(allCards)
-  //   .sort((a, b) => moment(a, dateFormat).toDate() - moment(b, dateFormat).toDate())
-  //   .forEach((key) => {
-  //       const newDate = new Date(key);
-  //       const label = newDate.toISOString().slice(0, 7);
-  //       const newMonth = newDate.getMonth();
-  //       if (currMonth === undefined || currMonth !== newMonth) {
-  //         console.log('herer');
-  //         currMonth = newMonth;
-  //         obj = {
-  //           label: label, 
-  //           data: [],
-  //           backgroundColor:'',
-  //           borderColor: '',
-  //           borderWidth: 1,
-  //         }
-  //         allCards[key].forEach((cardObj) => {
-  //           cardObj.tags.forEach((tag) => {
-  //             if (copiedData.labels.indexOf(tag) === -1) {
-  //               console.log('herer1');
-  //               copiedData.labels.push(tag);
-  //               obj.data.push(allTags[tag])
-  //             }
-  //           });
-  //         });
-  //         const color = randomRgba();
-  //         obj.backgroundColor = color + 0.2 + ')';
-  //         obj.borderColor = color + 1 + ')';
-  //         copiedData.datasets.push(obj)
-  //       }
-  //       else {
-  //         console.log('herer4');
-  //       }
-  //   });
-
+  Object.keys(allTagsByMonth).forEach((label) => {
+    const obj = {
+      label: label, 
+      data: [],
+      backgroundColor:'',
+      borderColor: '',
+      borderWidth: 1,
+    }
+    console.log('herer1');
+    console.log(allTagsByMonth[label]);
+    console.log('herer2');
+    Object.keys(allTagsByMonth[label]).forEach((tag) => {
+      obj.data.push(allTagsByMonth[label][tag])
+      copiedData.labels.push(tag);
+    });
+    console.log('herer3');
+    console.log(obj.data);
+    console.log('herere4');
+    const color = randomRgba();
+    obj.backgroundColor = color + 0.2 + ')';
+    obj.borderColor = color + 1 + ')';
+    copiedData.datasets.push(obj);
+  });
   return copiedData;
 };
