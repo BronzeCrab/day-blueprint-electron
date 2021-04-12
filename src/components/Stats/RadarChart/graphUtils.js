@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { randomRgba } from '../VerticalBar/graphUtils';
 
 export const mockedData = {
@@ -31,7 +30,10 @@ export const getFormatedData = (storageCards, copiedData) => {
           }
           else {
             allTagsByMonth[label][tag] = 1;
-          };
+            if (copiedData.labels.indexOf(tag) === -1) {
+              copiedData.labels.push(tag);
+            }
+          }
         });
       });
     });
@@ -45,16 +47,14 @@ export const getFormatedData = (storageCards, copiedData) => {
       borderColor: '',
       borderWidth: 1,
     }
-    console.log('herer1');
-    console.log(allTagsByMonth[label]);
-    console.log('herer2');
-    Object.keys(allTagsByMonth[label]).forEach((tag) => {
-      obj.data.push(allTagsByMonth[label][tag])
-      copiedData.labels.push(tag);
+    copiedData.labels.forEach((tag) => {
+      if (!(tag in allTagsByMonth[label])) {
+        obj.data.push(0);
+      }
+      else {
+        obj.data.push(allTagsByMonth[label][tag])
+      }
     });
-    console.log('herer3');
-    console.log(obj.data);
-    console.log('herere4');
     const color = randomRgba();
     obj.backgroundColor = color + 0.2 + ')';
     obj.borderColor = color + 1 + ')';
