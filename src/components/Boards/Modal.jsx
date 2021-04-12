@@ -47,12 +47,15 @@ class Modal extends Component {
       tags
     } = this.state;
     const { addcard, laneid, isEdit, updateCardDetails, cardID } = this.props;
+    // Grabing all the tags from state and make it lowercase
+    const updatedTags = tags.map(tag => tag.toLowerCase());
+    
     if (title?.trim() && description) {
       // Here I'm checking the edit flag, If it's true it means user want to edit the card details
       if (isEdit) {
-        updateCardDetails({ title, description, laneid, cardID, tags });
+        updateCardDetails({ title, description, laneid, cardID, tags: updatedTags });
       } else {
-        addcard({ title, description, laneid, tags });
+        addcard({ title, description, laneid, tags: updatedTags });
       }
     } else {
       alert('Please enter all the details');

@@ -31,7 +31,7 @@ function randomRgba() {
     const o = Math.round;
     const r = Math.random;
     const s = 255;
-    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',';
+    return `rgba(${  o(r()*s)  },${  o(r()*s)  },${  o(r()*s)  },`;
 }
 
 export const getFormatedData = (storageCards, copiedData) => {
@@ -60,8 +60,8 @@ export const getFormatedData = (storageCards, copiedData) => {
       copiedData.labels.push(tag);
       copiedData.datasets[0].data.push(allTags[tag].count);
       const color = randomRgba();
-      copiedData.datasets[0].backgroundColor.push(color + 0.2 + ')');
-      copiedData.datasets[0].borderColor.push(color + 1 + ')');
+      copiedData.datasets[0].backgroundColor.push(`${color + 0.2  })`);
+      copiedData.datasets[0].borderColor.push(`${color + 1  })`);
     })
 
     return copiedData;
