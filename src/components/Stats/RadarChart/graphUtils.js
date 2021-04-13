@@ -56,8 +56,8 @@ export const getFormatedData = (storageCards, copiedData) => {
       }
     });
     const color = randomRgba();
-    obj.backgroundColor = color + 0.2 + ')';
-    obj.borderColor = color + 1 + ')';
+    obj.backgroundColor = (`${color + 0.2  })`);
+    obj.borderColor = (`${color + 1  })`);
     copiedData.datasets.push(obj);
   });
   return copiedData;
