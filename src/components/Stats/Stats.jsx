@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from '../Navbar';
 import LineChart from './LineChart/LineChart';
 import VerticalBar from './VerticalBar/VerticalBar';
+import RadarChart from './RadarChart/RadarChart';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Stats extends Component {
@@ -11,6 +12,7 @@ class Stats extends Component {
         <Navbar />
         <LineChart />
         <VerticalBar />
+        <RadarChart />
       </div>
     );
   }

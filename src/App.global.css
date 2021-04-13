@@ -172,6 +172,10 @@ a:hover {
   top: 0;
 }
 
+.justify-content-md-center {
+  margin-top: 0.5rem;
+}
+
 .tagInput {
   outline: none;
   border-width: 0px;
