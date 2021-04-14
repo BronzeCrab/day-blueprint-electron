@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react'
-import { Pie  } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
 import { asyncLocalStorage } from '../../Boards/utils';
 import {
@@ -42,7 +42,7 @@ class PieChart extends React.Component {
     if (!data)
       return null;
 
-    return (<Pie data={data} options={options} />);
+    return (<Pie data={data} />);
   }
 }
 

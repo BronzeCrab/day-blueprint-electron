@@ -15,11 +15,6 @@ export const mockedData = {
   ],
 }
 
-export const options = {
-  scale: {
-    ticks: { beginAtZero: true },
-  },
-}
 
 export const getFormatedData = (storageCards, copiedData) => {
 
@@ -33,7 +28,7 @@ export const getFormatedData = (storageCards, copiedData) => {
     });
     const color = randomRgba();
     copiedData.datasets[0].backgroundColor.push(`${color + 0.2  })`);
-    copiedData.datasets[0].borderColor.push(`${color + 1  })`);
+    copiedData.datasets[0].borderColor.push(`${color + 0.2  })`);
   };
 
   return copiedData;
