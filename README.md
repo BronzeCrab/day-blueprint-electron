@@ -20,11 +20,15 @@ It's free trello-like task tracker for everyday
 
 `git checkout main`
 
-`yarn`
+`yarn install`
 
 `yarn start`
 
 ## How to build package:
+
+`git checkout main`
+
+`yarn install`
 
 In order to make a package you need to run the command:
  - on Linux: `yarn package` (It will generate a folder called release and in this folder, you will found .appImage file)
