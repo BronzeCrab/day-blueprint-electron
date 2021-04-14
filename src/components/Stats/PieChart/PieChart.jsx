@@ -5,7 +5,6 @@ import { Pie } from 'react-chartjs-2';
 import { asyncLocalStorage } from '../../Boards/utils';
 import {
   mockedData,
-  options,
   getFormatedData,
 } from './graphUtils';
 
@@ -16,7 +15,7 @@ class PieChart extends React.Component {
     this.state = {
       data: null,
     };
-  }
+  };
 
   componentDidMount() {
     this.fetchDataFromStorage();
@@ -29,7 +28,7 @@ class PieChart extends React.Component {
       const formatedData = getFormatedData(storageCards, graphData);
 
       this.setState({ data: formatedData });
-      
+
     } catch (err) {
       console.error(err);
     }
@@ -44,6 +43,6 @@ class PieChart extends React.Component {
 
     return (<Pie data={data} />);
   }
-}
+};
 
-export default PieChart
+export default PieChart;

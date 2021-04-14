@@ -29,7 +29,7 @@ class RadarChart extends React.Component {
       const formatedData = getFormatedData(storageCards, graphData);
 
       this.setState({ data: formatedData });
-      
+
     } catch (err) {
       console.error(err);
     }

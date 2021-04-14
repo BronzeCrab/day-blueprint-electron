@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const dateFormat = 'YYYY-MM-DD'; 
+const dateFormat = 'YYYY-MM-DD';
 
 export const mockedData = {
   labels: [],
@@ -27,7 +27,7 @@ export const options = {
     yAxes: [
       {
         ticks: {
-            beginAtZero: true,
+          beginAtZero: true,
         },
       },
     ],
@@ -43,31 +43,31 @@ export const getFormatedData = (storageCards, copiedData) => {
       .forEach((key) => {
         const cardArray = storageCards.lanes[i].cards[key]
         cardArray.forEach((cardObj) => {
-            cardObj.laneId = i;
-            if (key in allCards) {
-                allCards[key].push(cardObj);
-            }
-            else {
-                allCards[key] = [cardObj];
-            }
+          cardObj.laneId = i;
+          if (key in allCards) {
+            allCards[key].push(cardObj);
+          }
+          else {
+            allCards[key] = [cardObj];
+          }
 
         });
       });
-    }
-    Object.keys(allCards)
-      .sort((a, b) => moment(a, dateFormat).toDate() - moment(b, dateFormat).toDate())
-      .forEach((key) => {
-          copiedData.labels.push(key);
-          let numOfDone = 0;
-          const totalPerDay = allCards[key].length;
-          allCards[key].forEach((cardObj) => {
-              if (cardObj.laneId === 2) {
-                  numOfDone += 1;
-              }
-          });
-          copiedData.datasets[0].data.push(numOfDone);
-          copiedData.datasets[1].data.push(totalPerDay);
+  }
+  Object.keys(allCards)
+    .sort((a, b) => moment(a, dateFormat).toDate() - moment(b, dateFormat).toDate())
+    .forEach((key) => {
+      copiedData.labels.push(key);
+      let numOfDone = 0;
+      const totalPerDay = allCards[key].length;
+      allCards[key].forEach((cardObj) => {
+        if (cardObj.laneId === 2) {
+          numOfDone += 1;
+        }
       });
+      copiedData.datasets[0].data.push(numOfDone);
+      copiedData.datasets[1].data.push(totalPerDay);
+    });
 
-    return copiedData;
+  return copiedData;
 };
