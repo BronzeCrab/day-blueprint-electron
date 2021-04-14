@@ -1,6 +1,7 @@
 It's free trello-like task tracker for everyday
 
 ## Used packages:
+
 - react js
 - electron
 - react-electron-boilreplate [react-electron-boilreplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
@@ -10,6 +11,7 @@ It's free trello-like task tracker for everyday
 - react-quill [react-quill](https://github.com/zenoamaro/react-quill)
 
 ## How to run for using:
+
  - windows - just run exe
  - mac os - just run dmg
  - linux - just make AppImage file executable and run it
@@ -25,6 +27,6 @@ It's free trello-like task tracker for everyday
 ## How to build package:
 
 In order to make a package you need to run the command:
- - Linux: yarn package (It will generate a folder called release and in this folder, you will found .appImage file)
- - Windows: yarn package:windows (It will generate a folder called release and in this folder, you will found .exe file)
- - MAC: yarn package (It will generate a folder called release and in this folder, you will found .dmg file)
+ - on Linux: `yarn package` (It will generate a folder called release and in this folder, you will found .appImage file)
+ - on Windows: `yarn package:windows` (It will generate a folder called release and in this folder, you will found .exe file)
+ - on MAC: `yarn package` (It will generate a folder called release and in this folder, you will found .dmg file)
