@@ -27,7 +27,6 @@ class Modal extends Component {
   componentWillReceiveProps(nextProps) {
     const {
       title,
-      description
     } = this.state;
     // I used to match values, The setState will only happen once the value changes.
     if (nextProps.editTitle !== title) {
@@ -49,7 +48,7 @@ class Modal extends Component {
     const { addcard, laneid, isEdit, updateCardDetails, cardID } = this.props;
     // Grabing all the tags from state and make it lowercase
     const updatedTags = tags.map(tag => tag.toLowerCase());
-    
+
     if (title?.trim() && description) {
       // Here I'm checking the edit flag, If it's true it means user want to edit the card details
       if (isEdit) {

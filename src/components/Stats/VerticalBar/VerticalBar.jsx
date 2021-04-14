@@ -16,7 +16,7 @@ class VerticalBar extends React.Component {
     this.state = {
       data: null,
     };
-  }
+  };
 
   componentDidMount() {
     this.fetchDataFromStorage();
@@ -29,7 +29,7 @@ class VerticalBar extends React.Component {
       const formatedData = getFormatedData(storageCards, graphData);
 
       this.setState({ data: formatedData });
-      
+
     } catch (err) {
       console.error(err);
     }
@@ -46,4 +46,4 @@ class VerticalBar extends React.Component {
   }
 }
 
-export default VerticalBar
+export default VerticalBar;

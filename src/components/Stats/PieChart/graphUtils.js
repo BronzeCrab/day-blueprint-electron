@@ -23,17 +23,17 @@ export const options = {
 
 export const getFormatedData = (storageCards, copiedData) => {
 
-  for (let i = 0; i < 3; i+=1) {
-  // eslint-disable-next-line @typescript-eslint/no-loop-func
-    Object.keys(storageCards.lanes[i].cards).forEach(function(key) {
+  for (let i = 0; i < 3; i += 1) {
+    // eslint-disable-next-line @typescript-eslint/no-loop-func
+    Object.keys(storageCards.lanes[i].cards).forEach(function (key) {
       const cardArray = storageCards.lanes[i].cards[key]
-      cardArray.forEach(function(cardObj) {
+      cardArray.forEach(function (cardObj) {
         copiedData.datasets[0].data[i] += 1;
       });
     });
     const color = randomRgba();
-    copiedData.datasets[0].backgroundColor.push(`${color + 0.2  })`);
-    copiedData.datasets[0].borderColor.push(`${color + 1  })`);
+    copiedData.datasets[0].backgroundColor.push(`${color + 0.2})`);
+    copiedData.datasets[0].borderColor.push(`${color + 1})`);
   };
 
   return copiedData;

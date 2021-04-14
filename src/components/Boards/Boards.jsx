@@ -27,7 +27,7 @@ const mockedData = {
       "id": 1,
       "name": "to do",
       "board_id": 1,
-      "cards": {} 
+      "cards": {}
     },
     {
       "id": 2,
