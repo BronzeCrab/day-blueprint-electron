@@ -15,7 +15,7 @@ export const options = {
 
 export const getFormatedData = (storageCards, copiedData) => {
   const allTagsByMonth = {};
-  for (let i = 0; i < 3; i+=1) {
+  for (let i = 0; i < 3; i += 1) {
     Object.keys(storageCards.lanes[i].cards).forEach((key) => {
       const newDate = new Date(key);
       const label = newDate.toISOString().slice(0, 7);
@@ -24,7 +24,7 @@ export const getFormatedData = (storageCards, copiedData) => {
       }
       const cardArray = storageCards.lanes[i].cards[key]
       cardArray.forEach((cardObj) => {
-        cardObj.tags.forEach(function(tag) {
+        cardObj.tags.forEach(function (tag) {
           if (tag in allTagsByMonth[label]) {
             allTagsByMonth[label][tag] += 1;
           }
@@ -41,9 +41,9 @@ export const getFormatedData = (storageCards, copiedData) => {
 
   Object.keys(allTagsByMonth).forEach((label) => {
     const obj = {
-      label: label, 
+      label,
       data: [],
-      backgroundColor:'',
+      backgroundColor: '',
       borderColor: '',
       borderWidth: 1,
     }
@@ -56,8 +56,8 @@ export const getFormatedData = (storageCards, copiedData) => {
       }
     });
     const color = randomRgba();
-    obj.backgroundColor = (`${color + 0.2  })`);
-    obj.borderColor = (`${color + 1  })`);
+    obj.backgroundColor = (`${color + 0.2})`);
+    obj.borderColor = (`${color + 1})`);
     copiedData.datasets.push(obj);
   });
   return copiedData;

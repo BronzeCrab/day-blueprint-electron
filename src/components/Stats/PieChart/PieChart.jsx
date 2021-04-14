@@ -1,21 +1,21 @@
 /* eslint-disable no-console */
 import React from 'react'
-import { Line } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
 import { asyncLocalStorage } from '../../Boards/utils';
 import {
   mockedData,
-  options,
   getFormatedData,
 } from './graphUtils';
 
-class LineChart extends React.Component {
+// eslint-disable-next-line react/prefer-stateless-function
+class PieChart extends React.Component {
   constructor() {
     super();
     this.state = {
       data: null,
     };
-  }
+  };
 
   componentDidMount() {
     this.fetchDataFromStorage();
@@ -41,9 +41,8 @@ class LineChart extends React.Component {
     if (!data)
       return null;
 
-    return (<Line data={data} options={options} />);
+    return (<Pie data={data} />);
   }
-}
+};
 
-export default LineChart
-
+export default PieChart;
