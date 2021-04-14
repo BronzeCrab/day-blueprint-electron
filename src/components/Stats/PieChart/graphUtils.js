@@ -13,13 +13,7 @@ export const mockedData = {
       borderWidth: 1,
     },
   ],
-}
-
-export const options = {
-  scale: {
-    ticks: { beginAtZero: true },
-  },
-}
+};
 
 export const getFormatedData = (storageCards, copiedData) => {
 
