@@ -20,6 +20,8 @@ It's free trello-like task tracker for everyday
 
 `git checkout main`
 
+`git pull origin main`
+
 `yarn install`
 
 `yarn start`
@@ -27,6 +29,8 @@ It's free trello-like task tracker for everyday
 ## How to build package:
 
 `git checkout main`
+
+`git pull origin main`
 
 `yarn install`
 
