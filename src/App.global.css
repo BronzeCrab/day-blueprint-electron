@@ -303,10 +303,9 @@ a:hover {
   font-size: small;
 }
 
-/* Commented becasue of production issue */
-/* .ql-snow .ql-picker.ql-font {
+.ql-snow .ql-picker.ql-font {
   margin-top: 10px;
-} */
+}
 
 .stats-charts-wrapper {
   overflow: scroll;
