@@ -227,7 +227,6 @@ class Boards extends Component {
       lane.cards[updatedDate] = lane.cards[updatedDate] ? lane.cards[updatedDate] : [];
     });
 
-
     this.setState({
       date: updatedDate,
       data: scene,
@@ -258,9 +257,11 @@ class Boards extends Component {
     tags
   }) => {
     const { data, date } = this.state;
-
+    const cards = JSON.parse(await asyncLocalStorage.getItem('boards'));
     // Here we are using deep cloning method to remove the reference from the data object.
     const copiedData = JSON.parse(JSON.stringify(data));
+    copiedData.tags = cards.tags;
+    
     copiedData.lanes[laneid].cards[date][cardID].title = title;
     copiedData.lanes[laneid].cards[date][cardID].description = description;
     copiedData.lanes[laneid].cards[date][cardID].tags = tags;
