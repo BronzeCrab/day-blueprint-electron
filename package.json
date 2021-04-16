@@ -30,6 +30,9 @@
       "prettier --ignore-path .eslintignore --single-quote --write"
     ]
   },
+  "sideEffects": [
+    "*.css"
+  ],
   "build": {
     "productName": "Day Blueprint",
     "appId": "org.erb.ElectronReact",

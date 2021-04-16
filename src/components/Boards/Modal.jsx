@@ -92,6 +92,7 @@ class Modal extends Component {
       description,
       tags
     } = this.state;
+    const isDevelopment = Boolean(process.env.NODE_ENV === 'development');
 
     return (
       <BootstrapModal
@@ -121,7 +122,7 @@ class Modal extends Component {
               </InputGroup>
             </Form.Group>
             <Form.Group controlId="description">
-              <InputGroup className="mb-3">
+              <InputGroup className={`mb-3 ${isDevelopment ? "editorContainerGroup" : ''}`}>
                 <EditorInput
                   editorState={description}
                   onChange={this.setDescriptionValue}
